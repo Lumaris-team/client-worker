@@ -45,6 +45,7 @@ const NAVBAR_STYLE = `
     -webkit-backdrop-filter: blur(22px) saturate(1.15);
     box-shadow:
       0 10px 40px rgba(0, 0, 0, 0.18),
+      0 0 34px rgba(146, 116, 255, 0.08),
       0 0 0 1px rgba(255, 255, 255, 0.04) inset,
       0 1px 0 rgba(255, 255, 255, 0.08) inset;
     pointer-events: auto;

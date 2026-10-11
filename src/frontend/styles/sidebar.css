@@ -136,7 +136,7 @@
     padding: 6px;
     border: 1px solid var(--line);
     border-radius: 18px;
-    background: rgba(10, 18, 17, 0.42);
+    background: rgba(8, 9, 18, 0.42);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
   }
