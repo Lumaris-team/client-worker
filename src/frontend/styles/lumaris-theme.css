@@ -50,6 +50,12 @@ main [class*="card"],
 main [class*="panel"],
 main [class*="block"] {
   border-color: transparent;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018) 48%, transparent 100%),
+    transparent;
+  box-shadow:
+    0 20px 54px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.012) inset;
 }
 
 a,
