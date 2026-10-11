@@ -21,6 +21,8 @@
 
 html {
   min-height: 100%;
+  scrollbar-color: var(--accent-2) var(--ink);
+  scrollbar-width: thin;
   background:
     radial-gradient(circle at 76% 18%, rgba(32, 24, 72, 0.78), transparent 34rem),
     radial-gradient(circle at 10% 92%, rgba(82, 48, 140, 0.2), transparent 38rem),
