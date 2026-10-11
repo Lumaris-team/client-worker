@@ -15,20 +15,20 @@
   border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(8, 9, 18, 0.32);
+    rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(140, 236, 255, 0.02) inset;
+    0 18px 48px rgba(0, 0, 0, 0.1),
+    0 0 22px rgba(140, 236, 255, 0.04) inset;
   overflow: hidden;
   mask-image:
-    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 4%, rgba(0, 0, 0, 0.72) 12%, #000 18%, #000 82%, rgba(0, 0, 0, 0.72) 88%, rgba(0, 0, 0, 0.18) 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 4%, rgba(0, 0, 0, 0.72) 12%, #000 18%, #000 82%, rgba(0, 0, 0, 0.72) 88%, rgba(0, 0, 0, 0.18) 96%, transparent 100%);
+    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%);
   mask-composite: intersect;
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 4%, rgba(0, 0, 0, 0.72) 12%, #000 18%, #000 82%, rgba(0, 0, 0, 0.72) 88%, rgba(0, 0, 0, 0.18) 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 4%, rgba(0, 0, 0, 0.72) 12%, #000 18%, #000 82%, rgba(0, 0, 0, 0.72) 88%, rgba(0, 0, 0, 0.18) 96%, transparent 100%);
+    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%);
   -webkit-mask-composite: source-in;
   transition:
     border-color 220ms ease,

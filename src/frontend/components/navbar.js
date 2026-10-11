@@ -181,8 +181,8 @@ const NAVBAR_STYLE = `
     align-items: center;
     gap: 10px;
     padding: 8px 12px;
-    border-color: rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.03);
+    border-color: transparent;
+    background: transparent;
     color: rgba(237, 245, 242, 0.82);
     flex-shrink: 0;
   }
@@ -265,8 +265,8 @@ const NAVBAR_STYLE = `
     justify-content: center;
     gap: 10px;
     padding: 8px 10px;
-    border-color: rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.03);
+    border-color: transparent;
+    background: transparent;
     color: rgba(237, 245, 242, 0.82);
   }
 
