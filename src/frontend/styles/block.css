@@ -21,6 +21,14 @@
     0 18px 48px rgba(0, 0, 0, 0.2),
     0 0 0 1px rgba(140, 236, 255, 0.02) inset;
   overflow: hidden;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-composite: source-in;
   transition:
     border-color 220ms ease,
     box-shadow 220ms ease,
