@@ -134,7 +134,7 @@
     flex-direction: row;
     justify-content: space-around;
     padding: 6px;
-    border: 1px solid var(--line);
+    border: 1px solid transparent;
     border-radius: 18px;
     background: rgba(8, 9, 18, 0.42);
     backdrop-filter: blur(18px);

@@ -39,7 +39,7 @@ const NAVBAR_STYLE = `
     min-height: 42px;
     padding: 6px 12px;
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
     background: rgba(8, 9, 18, 0.28);
     backdrop-filter: blur(22px) saturate(1.15);
     -webkit-backdrop-filter: blur(22px) saturate(1.15);

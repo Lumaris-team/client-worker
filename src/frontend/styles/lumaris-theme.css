@@ -7,7 +7,7 @@
   --text: var(--paper);
   --muted: #858493;
   --faint: rgba(242, 240, 235, 0.42);
-  --line: rgba(255, 255, 255, 0.14);
+  --line: transparent;
   --surface: rgba(255, 255, 255, 0.045);
   --surface-strong: rgba(255, 255, 255, 0.08);
   --accent: #8cecff;
@@ -19,6 +19,7 @@
   --bg-b: #11121f;
   --radius: 0;
   --navbar-height: 72px;
+  --settings-panel-border: transparent;
 }
 
 html {
@@ -43,6 +44,12 @@ body {
     linear-gradient(0deg, transparent 49.9%, rgba(255, 255, 255, 0.025) 50%, transparent 50.1%),
     transparent;
   background-size: 50% 100%, 100% 50%, auto;
+}
+
+main [class*="card"],
+main [class*="panel"],
+main [class*="block"] {
+  border-color: transparent;
 }
 
 a,
