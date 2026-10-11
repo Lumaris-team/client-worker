@@ -116,7 +116,7 @@ function renderSubjects(subjects) {
     <div class="subject-block" data-path="${subject.path}" data-name="${subject.name}">
       <div class="subject-header">
         <div class="subject-info">
-          <span class="subject-icon" data-icon="/assets/icons/subjects.svg"></span>
+          <span class="subject-icon" data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/subjects.svg"></span>
           <div class="subject-meta">
             <h3 class="subject-name">${subject.name}</h3>
             <p class="subject-count">0 files</p>
@@ -124,10 +124,10 @@ function renderSubjects(subjects) {
         </div>
         <div class="subject-actions">
           <button class="subject-action-btn rename" aria-label="Rename">
-            <span data-icon="/assets/icons/edit.svg"></span>
+            <span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/edit.svg"></span>
           </button>
           <button class="subject-action-btn delete" aria-label="Delete">
-            <span data-icon="/assets/icons/delete.svg"></span>
+            <span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/delete.svg"></span>
           </button>
         </div>
       </div>
@@ -276,17 +276,17 @@ function renderFiles(files, filesList, subjectCount) {
 
   filesList.innerHTML = files.map(file => `
     <div class="file-block" data-path="${file.path}" data-name="${file.name}">
-      <div class="file-icon" data-icon="/assets/icons/file.svg"></div>
+      <div class="file-icon" data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/file.svg"></div>
       <h4 class="file-name">${file.name}</h4>
       <div class="file-actions">
         <button class="file-action-btn download" type="button" aria-label="Download file">
-          <span data-icon="/assets/icons/download.svg"></span>
+          <span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/download.svg"></span>
         </button>
         <button class="file-action-btn rename" type="button" aria-label="Rename file">
-          <span data-icon="/assets/icons/edit.svg"></span>
+          <span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/edit.svg"></span>
         </button>
         <button class="file-action-btn delete" type="button" aria-label="Delete file">
-          <span data-icon="/assets/icons/delete.svg"></span>
+          <span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/delete.svg"></span>
         </button>
       </div>
     </div>

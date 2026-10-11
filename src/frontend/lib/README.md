@@ -405,7 +405,7 @@ loadIcons(container);
 
 // Get icon path
 const iconPath = getIconPath('home');
-console.log(iconPath); // '/assets/icons/home.svg'
+console.log(iconPath); // 'https://shared-assets.danielersen.workers.dev/assets/icons/home.svg'
 
 // Use custom icon mapping
 const customIcons = {
@@ -417,7 +417,7 @@ loadIcons('[data-icon]', customIcons);
 **HTML Integration**:
 ```html
 <!-- Icon placeholder -->
-<span data-icon="/assets/icons/home.svg" data-icon-width="24" data-icon-height="24"></span>
+<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/home.svg" data-icon-width="24" data-icon-height="24"></span>
 
 <!-- Load icons -->
 <script type="module">
@@ -433,14 +433,14 @@ import { loadIcons } from '/lib/icons.js';
 // Load icons after dynamic content is added
 function addDynamicContent() {
   const container = document.getElementById('dynamic-content');
-  container.innerHTML = '<span data-icon="/assets/icons/new-icon.svg"></span>';
+  container.innerHTML = '<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/new-icon.svg"></span>';
   loadIcons(container);
 }
 ```
 
 **Custom Icon Sizes**:
 ```html
-<span data-icon="/assets/icons/home.svg" 
+<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/home.svg"
       data-icon-width="32" 
       data-icon-height="32"></span>
 ```

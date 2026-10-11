@@ -11,17 +11,17 @@ const NAV_ITEMS = [
 ];
  
 const ICONS = {
-  home: '/assets/icons/home.svg',
-  grid: '/assets/icons/grid.svg',
-  sparkles: '/assets/icons/sparkles.svg',
-  'study-notes': '/assets/icons/study-notes.svg',
-  web: '/assets/icons/web.svg',
-  database: '/assets/icons/database.svg',
-  wrench: '/assets/icons/wrench.svg',
-  settings: '/assets/icons/settings.svg',
-  refresh: '/assets/icons/refresh.svg',
-  logout: '/assets/icons/logout.svg',
-  more: '/assets/icons/more.svg',
+  home: 'https://shared-assets.danielersen.workers.dev/assets/icons/home.svg',
+  grid: 'https://shared-assets.danielersen.workers.dev/assets/icons/grid.svg',
+  sparkles: 'https://shared-assets.danielersen.workers.dev/assets/icons/sparkles.svg',
+  'study-notes': 'https://shared-assets.danielersen.workers.dev/assets/icons/study-notes.svg',
+  web: 'https://shared-assets.danielersen.workers.dev/assets/icons/web.svg',
+  database: 'https://shared-assets.danielersen.workers.dev/assets/icons/database.svg',
+  wrench: 'https://shared-assets.danielersen.workers.dev/assets/icons/wrench.svg',
+  settings: 'https://shared-assets.danielersen.workers.dev/assets/icons/settings.svg',
+  refresh: 'https://shared-assets.danielersen.workers.dev/assets/icons/refresh.svg',
+  logout: 'https://shared-assets.danielersen.workers.dev/assets/icons/logout.svg',
+  more: 'https://shared-assets.danielersen.workers.dev/assets/icons/more.svg',
 };
 
 const NAVBAR_STYLE = `
@@ -473,7 +473,7 @@ const NAVBAR_TEMPLATE = `
     <div class="inner">
       <a class="brand" data-home-link href="/pages/home" aria-label="Go to home">
         <span class="brand-icon-wrap">
-          <img class="brand-icon" src="/assets/logo/logo.png" alt="Dashboard">
+          <img class="brand-icon" src="https://shared-assets.danielersen.workers.dev/assets/logo/logo.png" alt="Dashboard">
         </span>
       </a>
 

@@ -228,7 +228,7 @@ function createWebsiteBlock(website) {
   editBtn.className = 'website-action-btn edit';
   editBtn.type = 'button';
   editBtn.ariaLabel = 'Edit website';
-  editBtn.innerHTML = '<span data-icon="/assets/icons/edit.svg"></span>';
+  editBtn.innerHTML = '<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/edit.svg"></span>';
   editBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     openEditModal(website);
@@ -238,7 +238,7 @@ function createWebsiteBlock(website) {
   deleteBtn.className = 'website-action-btn delete';
   deleteBtn.type = 'button';
   deleteBtn.ariaLabel = 'Delete website';
-  deleteBtn.innerHTML = '<span data-icon="/assets/icons/delete.svg"></span>';
+  deleteBtn.innerHTML = '<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/delete.svg"></span>';
   deleteBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     openDeleteModal(website);

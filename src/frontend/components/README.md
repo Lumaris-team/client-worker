@@ -181,17 +181,17 @@ document.addEventListener('site-navbar:refresh', (event) => {
 
 **Icon System**:
 Icons are loaded dynamically from SVG files:
-- Home: `/assets/icons/home.svg`
-- Grid: `/assets/icons/grid.svg`
-- Sparkles: `/assets/icons/sparkles.svg`
-- Study Notes: `/assets/icons/study-notes.svg`
-- Web: `/assets/icons/web.svg`
-- Database: `/assets/icons/database.svg`
-- Wrench: `/assets/icons/wrench.svg`
-- Settings: `/assets/icons/settings.svg`
-- Refresh: `/assets/icons/refresh.svg`
-- Logout: `/assets/icons/logout.svg`
-- More: `/assets/icons/more.svg`
+- Home: `https://shared-assets.danielersen.workers.dev/assets/icons/home.svg`
+- Grid: `https://shared-assets.danielersen.workers.dev/assets/icons/grid.svg`
+- Sparkles: `https://shared-assets.danielersen.workers.dev/assets/icons/sparkles.svg`
+- Study Notes: `https://shared-assets.danielersen.workers.dev/assets/icons/study-notes.svg`
+- Web: `https://shared-assets.danielersen.workers.dev/assets/icons/web.svg`
+- Database: `https://shared-assets.danielersen.workers.dev/assets/icons/database.svg`
+- Wrench: `https://shared-assets.danielersen.workers.dev/assets/icons/wrench.svg`
+- Settings: `https://shared-assets.danielersen.workers.dev/assets/icons/settings.svg`
+- Refresh: `https://shared-assets.danielersen.workers.dev/assets/icons/refresh.svg`
+- Logout: `https://shared-assets.danielersen.workers.dev/assets/icons/logout.svg`
+- More: `https://shared-assets.danielersen.workers.dev/assets/icons/more.svg`
 
 **Mobile Menu**:
 - Three-dot menu for additional options
