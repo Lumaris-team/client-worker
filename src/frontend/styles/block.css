@@ -13,23 +13,13 @@
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   box-shadow:
     0 18px 48px rgba(0, 0, 0, 0.1),
     0 0 22px rgba(140, 236, 255, 0.04) inset;
   overflow: hidden;
-  mask-image:
-    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%);
-  mask-composite: intersect;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 3%, rgba(0, 0, 0, 0.72) 9%, #000 14%, #000 86%, rgba(0, 0, 0, 0.72) 91%, rgba(0, 0, 0, 0.18) 97%, transparent 100%);
-  -webkit-mask-composite: source-in;
   transition:
     border-color 220ms ease,
     box-shadow 220ms ease,

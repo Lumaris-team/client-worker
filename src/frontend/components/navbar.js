@@ -38,7 +38,7 @@ const NAVBAR_STYLE = `
   .bar {
     min-height: 42px;
     padding: 6px 12px;
-    border-radius: 18px;
+    border-radius: 24px;
     border: 1px solid transparent;
     background: rgba(8, 9, 18, 0.28);
     backdrop-filter: blur(22px) saturate(1.15);
@@ -83,7 +83,7 @@ const NAVBAR_STYLE = `
   .feature,
   .quick {
     border: 1px solid transparent;
-    border-radius: 8px;
+    border-radius: 999px;
     background: transparent;
     color: inherit;
     cursor: pointer;
@@ -104,7 +104,7 @@ const NAVBAR_STYLE = `
     flex-shrink: 0;
     grid-column: 1;
     justify-self: start;
-    border-radius: 8px;
+    border-radius: 999px;
   }
 
   .brand:hover {
@@ -115,8 +115,8 @@ const NAVBAR_STYLE = `
   .action:hover,
   .feature:hover,
   .quick:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.16);
+    background: transparent;
+    border-color: transparent;
   }
 
   .brand:active,
@@ -134,8 +134,8 @@ const NAVBAR_STYLE = `
     display: block;
     transform: scale(1);
     transform-origin: center;
-    border-radius: 12px;
-    clip-path: inset(0 round 12px);
+    border-radius: 999px;
+    clip-path: inset(0 round 999px);
   }
 
   .center {
@@ -163,6 +163,7 @@ const NAVBAR_STYLE = `
   }
 
   .feature-list {
+    position: relative;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -171,16 +172,49 @@ const NAVBAR_STYLE = `
     margin: 0;
   }
 
+  .nav-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 0;
+    height: 0;
+    border-radius: 999px;
+    background: rgba(140, 236, 255, 0.16);
+    box-shadow:
+      0 0 26px rgba(140, 236, 255, 0.14),
+      0 0 0 1px rgba(140, 236, 255, 0.04) inset;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+    transition:
+      transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 360ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 360ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 180ms ease;
+  }
+
+  .nav-indicator[data-hovering="true"] {
+    opacity: 0.42;
+  }
+
+  .nav-indicator[data-hovering="false"] {
+    opacity: 1;
+  }
+
   .center[data-labels="hidden"] .feature-label,
   .center[data-labels="hidden"] .feature em {
     display: none;
   }
 
   .feature {
+    position: relative;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 8px 12px;
+    border-radius: 999px;
     border-color: transparent;
     background: transparent;
     color: rgba(237, 245, 242, 0.82);
@@ -188,8 +222,8 @@ const NAVBAR_STYLE = `
   }
 
   .feature[data-active="true"] {
-    background: rgba(140, 236, 255, 0.14);
-    border-color: rgba(140, 236, 255, 0.28);
+    background: transparent;
+    border-color: transparent;
     color: #f4fbf8;
   }
 
@@ -201,7 +235,7 @@ const NAVBAR_STYLE = `
     place-items: center;
     flex: 0 0 auto;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 999px;
   }
 
   .brand-icon-wrap {
@@ -211,7 +245,7 @@ const NAVBAR_STYLE = `
     place-items: center;
     overflow: hidden;
     flex: 0 0 auto;
-    border-radius: 8px;
+    border-radius: 999px;
     background: transparent;
   }
 
@@ -229,7 +263,7 @@ const NAVBAR_STYLE = `
     height: 20px;
     stroke: currentColor;
     fill: none;
-    clip-path: inset(0 round 8px);
+    clip-path: inset(0 round 999px);
   }
 
   .feature-label,
@@ -265,6 +299,7 @@ const NAVBAR_STYLE = `
     justify-content: center;
     gap: 10px;
     padding: 8px 10px;
+    border-radius: 999px;
     border-color: transparent;
     background: transparent;
     color: rgba(237, 245, 242, 0.82);
@@ -310,7 +345,7 @@ const NAVBAR_STYLE = `
     flex-direction: column;
     gap: 6px;
     padding: 8px;
-    border-radius: 16px;
+    border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(8, 9, 18, 0.55);
     backdrop-filter: blur(22px) saturate(1.15);
@@ -341,7 +376,7 @@ const NAVBAR_STYLE = `
     gap: 10px;
     padding: 9px 12px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
+    border-radius: 999px;
     background: rgba(255, 255, 255, 0.03);
     color: rgba(237, 245, 242, 0.9);
     cursor: pointer;
@@ -355,7 +390,7 @@ const NAVBAR_STYLE = `
 
   .more-item:hover {
     background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.16);
+    border-color: transparent;
   }
 
   .more-item:active {
@@ -398,7 +433,7 @@ const NAVBAR_STYLE = `
     .bar {
       min-height: 48px;
       padding: 10px 10px;
-      border-radius: 16px;
+      border-radius: 20px;
     }
 
     .feature-label {
@@ -444,6 +479,7 @@ const NAVBAR_TEMPLATE = `
       <div class="center" role="navigation" aria-label="Feature navigation">
         <div class="center-scroll" data-center-scroll tabindex="0">
           <div class="feature-list">
+            <span class="nav-indicator" data-hovering="false" aria-hidden="true"></span>
             ${NAV_ITEMS.map((item) => `
               <a class="feature" data-route="${item.slug}" href="${item.href}">
                 <span class="feature-icon" data-icon="${ICONS[item.icon] || ICONS.grid}"></span>
@@ -500,6 +536,9 @@ class SiteNavbar extends HTMLElement {
     this._boundUpdateHeight = this._updateHeight.bind(this);
     this._boundAction = this._handleAction.bind(this);
     this._boundDocClick = this._handleDocumentClick.bind(this);
+    this._boundFeatureEnter = this._handleFeatureEnter.bind(this);
+    this._boundFeatureLeave = this._handleFeatureLeave.bind(this);
+    this._featureIndicatorCleanup = null;
     this._refreshCooldownTimer = null;
   }
 
@@ -528,6 +567,7 @@ class SiteNavbar extends HTMLElement {
       
       // Load icons
       this._loadIcons();
+      this._setupFeatureIndicator();
     }
 
     this._syncActiveState();
@@ -607,6 +647,10 @@ class SiteNavbar extends HTMLElement {
       this._centerScrollCleanup();
       this._centerScrollCleanup = null;
     }
+    if (this._featureIndicatorCleanup) {
+      this._featureIndicatorCleanup();
+      this._featureIndicatorCleanup = null;
+    }
   }
 
   async _loadIcons() {
@@ -634,6 +678,50 @@ class SiteNavbar extends HTMLElement {
     this.shadowRoot?.querySelectorAll("[data-route]").forEach((item) => {
       item.dataset.active = String(item.dataset.route === current);
     });
+    this._moveFeatureIndicator(this.shadowRoot?.querySelector('[data-route][data-active="true"]'), false);
+  }
+
+  _setupFeatureIndicator() {
+    const root = this.shadowRoot;
+    const list = root?.querySelector(".feature-list");
+    if (!list || this._featureIndicatorCleanup) return;
+
+    const features = Array.from(list.querySelectorAll("[data-route]"));
+    const indicator = list.querySelector(".nav-indicator");
+    if (!indicator) return;
+
+    features.forEach((feature) => feature.addEventListener("pointerenter", this._boundFeatureEnter));
+    list.addEventListener("pointerleave", this._boundFeatureLeave);
+
+    this._featureIndicatorCleanup = () => {
+      features.forEach((feature) => feature.removeEventListener("pointerenter", this._boundFeatureEnter));
+      list.removeEventListener("pointerleave", this._boundFeatureLeave);
+    };
+
+    requestAnimationFrame(() => {
+      this._moveFeatureIndicator(list.querySelector('[data-route][data-active="true"]'), false);
+    });
+  }
+
+  _handleFeatureEnter(event) {
+    this._moveFeatureIndicator(event.currentTarget, true);
+  }
+
+  _handleFeatureLeave() {
+    this._moveFeatureIndicator(
+      this.shadowRoot?.querySelector('[data-route][data-active="true"]'),
+      false,
+    );
+  }
+
+  _moveFeatureIndicator(feature, hovering) {
+    const indicator = this.shadowRoot?.querySelector(".nav-indicator");
+    if (!indicator || !feature) return;
+
+    indicator.dataset.hovering = String(hovering);
+    indicator.style.width = `${feature.offsetWidth}px`;
+    indicator.style.height = `${feature.offsetHeight}px`;
+    indicator.style.transform = `translate3d(${feature.offsetLeft}px, ${feature.offsetTop}px, 0)`;
   }
 
   _observeHeight() {
@@ -654,6 +742,7 @@ class SiteNavbar extends HTMLElement {
     const updateLabelsState = () => {
       const availableWidth = this.getBoundingClientRect().width;
       center.dataset.labels = availableWidth <= LABELS_HIDE_WIDTH ? "hidden" : "visible";
+      this._moveFeatureIndicator(center.querySelector('[data-route][data-active="true"]'), false);
       this._updateHeight();
     };
 
