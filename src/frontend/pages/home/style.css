@@ -1,15 +1,15 @@
 :root {
   --navbar-height: 72px;
   color-scheme: dark;
-  --bg-a: #08100f;
-  --bg-b: #0d1917;
+  --bg-a: #080912;
+  --bg-b: #11121f;
   --text: #f3fbf7;
   --muted: rgba(243, 251, 247, 0.68);
   --line: rgba(255, 255, 255, 0.1);
   --surface: rgba(255, 255, 255, 0.05);
   --surface-strong: rgba(255, 255, 255, 0.08);
-  --accent: #52d6a8;
-  --accent-soft: rgba(82, 214, 168, 0.14);
+  --accent: #8cecff;
+  --accent-soft: rgba(140, 236, 255, 0.14);
   --radius: 10px;
   --row-1-h: 220px;
   --row-2-h: 200px;
@@ -23,7 +23,7 @@
 html {
   min-height: 100%;
   background:
-    radial-gradient(circle at top left, rgba(82, 214, 168, 0.18), transparent 28rem),
+    radial-gradient(circle at top left, rgba(140, 236, 255, 0.18), transparent 28rem),
     radial-gradient(circle at top right, rgba(119, 183, 255, 0.12), transparent 30rem),
     linear-gradient(145deg, var(--bg-a), var(--bg-b));
 }
@@ -126,10 +126,10 @@ a {
 
 .block-link:hover {
   transform: translateY(-2px);
-  border-color: rgba(82, 214, 168, 0.28);
+  border-color: rgba(140, 236, 255, 0.28);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)),
-    rgba(10, 18, 17, 0.42);
+    rgba(8, 9, 18, 0.42);
 }
 
 .block-link-body {

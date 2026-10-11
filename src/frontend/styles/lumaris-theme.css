@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+:root {
+  color-scheme: dark;
+  --ink: #080912;
+  --paper: #f2f0eb;
+  --text: var(--paper);
+  --muted: #858493;
+  --faint: rgba(242, 240, 235, 0.42);
+  --line: rgba(255, 255, 255, 0.14);
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(255, 255, 255, 0.08);
+  --accent: #8cecff;
+  --accent-2: #9274ff;
+  --accent-soft: rgba(140, 236, 255, 0.12);
+  --bg-a: #080912;
+  --bg-b: #11121f;
+  --radius: 0;
+  --navbar-height: 72px;
+}
+
+html {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 76% 18%, rgba(32, 24, 72, 0.78), transparent 34rem),
+    radial-gradient(circle at 10% 92%, rgba(82, 48, 140, 0.2), transparent 38rem),
+    var(--ink);
+}
+
+body {
+  min-height: 100vh;
+  color: var(--paper);
+  font-family: Manrope, sans-serif;
+  background:
+    linear-gradient(90deg, transparent 49.9%, rgba(255, 255, 255, 0.025) 50%, transparent 50.1%),
+    linear-gradient(0deg, transparent 49.9%, rgba(255, 255, 255, 0.025) 50%, transparent 50.1%),
+    transparent;
+  background-size: 50% 100%, 100% 50%, auto;
+}
+
+h1, h2, h3, h4, p {
+  text-wrap: pretty;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  color: var(--ink);
+  background: var(--accent);
+}

@@ -1,13 +1,13 @@
 :root {
   color-scheme: dark;
-  --bg-a: #08100f;
-  --bg-b: #0d1917;
+  --bg-a: #080912;
+  --bg-b: #11121f;
   --text: #f3fbf7;
   --muted: rgba(243, 251, 247, 0.68);
   --line: rgba(255, 255, 255, 0.1);
   --surface: rgba(255, 255, 255, 0.05);
-  --accent: #52d6a8;
-  --accent-soft: rgba(82, 214, 168, 0.14);
+  --accent: #8cecff;
+  --accent-soft: rgba(140, 236, 255, 0.14);
   --radius: 10px;
 }
 
@@ -18,7 +18,7 @@
 html {
   min-height: 100%;
   background:
-    radial-gradient(circle at top left, rgba(82, 214, 168, 0.18), transparent 28rem),
+    radial-gradient(circle at top left, rgba(140, 236, 255, 0.18), transparent 28rem),
     radial-gradient(circle at top right, rgba(119, 183, 255, 0.12), transparent 30rem),
     linear-gradient(145deg, var(--bg-a), var(--bg-b));
 }
@@ -54,7 +54,7 @@ body {
   border-radius: 16px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(10, 18, 17, 0.32);
+    rgba(8, 9, 18, 0.32);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
@@ -113,7 +113,7 @@ body {
 
 .auth-field input:focus {
   outline: none;
-  border-color: rgba(82, 214, 168, 0.45);
+  border-color: rgba(140, 236, 255, 0.45);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
@@ -237,7 +237,7 @@ body {
 }
 
 .auth-remember:hover .auth-remember-box {
-  border-color: rgba(82, 214, 168, 0.45);
+  border-color: rgba(140, 236, 255, 0.45);
 }
 
 .auth-remember input:checked + .auth-remember-box {
@@ -344,7 +344,7 @@ body {
 
 .auth-provider:hover {
   transform: translateY(-1px);
-  border-color: rgba(82, 214, 168, 0.34);
+  border-color: rgba(140, 236, 255, 0.34);
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -379,7 +379,7 @@ body {
 }
 
 .auth-message[data-kind="success"] {
-  border-color: rgba(82, 214, 168, 0.4);
+  border-color: rgba(140, 236, 255, 0.4);
   background: var(--accent-soft);
   color: #c7f6e4;
 }

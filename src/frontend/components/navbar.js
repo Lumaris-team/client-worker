@@ -40,7 +40,7 @@ const NAVBAR_STYLE = `
     padding: 6px 12px;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(10, 16, 17, 0.28);
+    background: rgba(8, 9, 18, 0.28);
     backdrop-filter: blur(22px) saturate(1.15);
     -webkit-backdrop-filter: blur(22px) saturate(1.15);
     box-shadow:
@@ -187,8 +187,8 @@ const NAVBAR_STYLE = `
   }
 
   .feature[data-active="true"] {
-    background: rgba(82, 214, 168, 0.14);
-    border-color: rgba(82, 214, 168, 0.28);
+    background: rgba(140, 236, 255, 0.14);
+    border-color: rgba(140, 236, 255, 0.28);
     color: #f4fbf8;
   }
 
@@ -311,7 +311,7 @@ const NAVBAR_STYLE = `
     padding: 8px;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(10, 16, 17, 0.55);
+    background: rgba(8, 9, 18, 0.55);
     backdrop-filter: blur(22px) saturate(1.15);
     -webkit-backdrop-filter: blur(22px) saturate(1.15);
     box-shadow:

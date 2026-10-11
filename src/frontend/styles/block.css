@@ -30,7 +30,7 @@
   padding: 0 10px;
   border-radius: 999px;
   background: var(--accent-soft);
-  color: #b8f4d9;
+  color: var(--accent);
   font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -60,7 +60,7 @@
 }
 
 .status-sync span {
-  color: #d7f7ea;
+  color: var(--paper);
   font-variant-numeric: tabular-nums;
 }
 

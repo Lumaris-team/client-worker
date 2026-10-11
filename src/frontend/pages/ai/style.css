@@ -1,17 +1,17 @@
 :root {
   --navbar-height: 72px;
   color-scheme: dark;
-  --bg-a: #08100f;
-  --bg-b: #0d1917;
+  --bg-a: #080912;
+  --bg-b: #11121f;
   --text: #f3fbf7;
   --muted: rgba(243, 251, 247, 0.68);
   --faint: rgba(243, 251, 247, 0.4);
   --line: rgba(255, 255, 255, 0.1);
   --surface: rgba(255, 255, 255, 0.05);
   --surface-strong: rgba(255, 255, 255, 0.08);
-  --accent: #52d6a8;
-  --accent-2: #77b7ff;
-  --accent-soft: rgba(82, 214, 168, 0.14);
+  --accent: #8cecff;
+  --accent-2: #9274ff;
+  --accent-soft: rgba(140, 236, 255, 0.14);
   --radius: 10px;
   --sidebar-w: 76px;
 }
@@ -23,7 +23,7 @@
 html {
   min-height: 100%;
   background:
-    radial-gradient(circle at top left, rgba(82, 214, 168, 0.18), transparent 28rem),
+    radial-gradient(circle at top left, rgba(140, 236, 255, 0.18), transparent 28rem),
     radial-gradient(circle at top right, rgba(119, 183, 255, 0.12), transparent 30rem),
     linear-gradient(145deg, var(--bg-a), var(--bg-b));
 }
@@ -126,7 +126,7 @@ a {
   padding: 8px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(10, 18, 17, 0.6);
+  background: rgba(8, 9, 18, 0.6);
   color: var(--text);
   font: inherit;
   font-size: 0.9rem;
@@ -153,7 +153,7 @@ a {
   padding: 8px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(10, 18, 17, 0.6);
+  background: rgba(8, 9, 18, 0.6);
   color: var(--text);
   font: inherit;
   font-size: 0.9rem;
@@ -162,7 +162,7 @@ a {
 }
 
 .custom-select:hover {
-  border-color: rgba(82, 214, 168, 0.4);
+  border-color: rgba(140, 236, 255, 0.4);
 }
 
 .custom-select-trigger {
@@ -184,7 +184,7 @@ a {
   right: 0;
   max-height: 400px;
   overflow-y: scroll;
-  background: rgba(10, 18, 17, 0.95);
+  background: rgba(8, 9, 18, 0.95);
   border: 1px solid var(--line);
   border-radius: 8px;
   z-index: 1000;
@@ -230,11 +230,11 @@ a {
 }
 
 .custom-option:hover {
-  background: rgba(82, 214, 168, 0.1);
+  background: rgba(140, 236, 255, 0.1);
 }
 
 .custom-option.selected {
-  background: rgba(82, 214, 168, 0.2);
+  background: rgba(140, 236, 255, 0.2);
 }
 
 .custom-option-score {
@@ -264,7 +264,7 @@ a {
   border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(10, 18, 17, 0.32);
+    rgba(8, 9, 18, 0.32);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
@@ -500,7 +500,7 @@ a {
   border-radius: 18px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(10, 18, 17, 0.32);
+    rgba(8, 9, 18, 0.32);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
@@ -641,7 +641,7 @@ a {
 }
 
 .markdown-content a {
-  color: #52d6a8;
+  color: #8cecff;
   text-decoration: underline;
 }
 
@@ -656,7 +656,7 @@ a {
 .markdown-content h3 { font-size: 1.1em; }
 
 .ai-model-selector select:hover {
-  border-color: rgba(82, 214, 168, 0.4);
+  border-color: rgba(140, 236, 255, 0.4);
 }
 
 .ai-model-selector select:focus {
@@ -676,7 +676,7 @@ a {
   padding: 16px 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(10, 18, 17, 0.6);
+  background: rgba(8, 9, 18, 0.6);
   color: var(--text);
   font: inherit;
   font-size: 1rem;
@@ -686,7 +686,7 @@ a {
 }
 
 .ai-prompt-area textarea:hover {
-  border-color: rgba(82, 214, 168, 0.4);
+  border-color: rgba(140, 236, 255, 0.4);
 }
 
 .ai-prompt-area textarea:focus {
@@ -712,7 +712,7 @@ a {
 }
 
 .ai-prompt-area button:hover {
-  background: rgba(82, 214, 168, 0.24);
+  background: rgba(140, 236, 255, 0.24);
   border-color: var(--accent);
 }
 
@@ -806,7 +806,7 @@ a {
   border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(10, 18, 17, 0.32);
+    rgba(8, 9, 18, 0.32);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   margin-bottom: 8px;
@@ -814,7 +814,7 @@ a {
 }
 
 .conversation-row:hover {
-  background: rgba(82, 214, 168, 0.1);
+  background: rgba(140, 236, 255, 0.1);
 }
 
 .conversation-info {
@@ -902,7 +902,7 @@ a {
   border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(10, 18, 17, 0.32);
+    rgba(8, 9, 18, 0.32);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
