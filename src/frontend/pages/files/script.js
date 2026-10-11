@@ -202,12 +202,12 @@ function formatFileSize(bytes) {
 }
 
 function getFolderIcon() {
-  return `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/folder.svg"></span>`;
+  return `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/folder.svg"></span>`;
 }
 
 function getFileIcon(extension) {
   // Generic file icon
-  return `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/file.svg"></span>`;
+  return `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/file.svg"></span>`;
 }
 
 async function loadIconsLocal(container) {
@@ -254,7 +254,7 @@ function renderFiles() {
   if (folders.length === 0 && files.length === 0) {
     filesList.innerHTML = `
       <div class="empty-state">
-        <div class="empty-state-icon" data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/folder.svg"></div>
+        <div class="empty-state-icon" data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/folder.svg"></div>
         <p class="empty-state-text">This folder is empty</p>
         <p class="empty-state-subtext">Upload files or create a folder to get started</p>
       </div>
@@ -313,7 +313,7 @@ function createFolderBlock(folder) {
   editBtn.className = 'file-action-btn edit';
   editBtn.type = 'button';
   editBtn.ariaLabel = 'Rename folder';
-  editBtn.innerHTML = `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/edit.svg"></span>`;
+  editBtn.innerHTML = `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/edit.svg"></span>`;
   editBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     openEditModal(folder, true);
@@ -323,7 +323,7 @@ function createFolderBlock(folder) {
   deleteBtn.className = 'file-action-btn delete';
   deleteBtn.type = 'button';
   deleteBtn.ariaLabel = 'Delete folder';
-  deleteBtn.innerHTML = `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/delete.svg"></span>`;
+  deleteBtn.innerHTML = `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/delete.svg"></span>`;
   deleteBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     openDeleteModal(folder, true);
@@ -381,7 +381,7 @@ function createFileBlock(file) {
   editBtn.className = 'file-action-btn edit';
   editBtn.type = 'button';
   editBtn.ariaLabel = 'Rename file';
-  editBtn.innerHTML = `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/edit.svg"></span>`;
+  editBtn.innerHTML = `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/edit.svg"></span>`;
   editBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     openEditModal(file, false);
@@ -391,7 +391,7 @@ function createFileBlock(file) {
   deleteBtn.className = 'file-action-btn delete';
   deleteBtn.type = 'button';
   deleteBtn.ariaLabel = 'Delete file';
-  deleteBtn.innerHTML = `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/delete.svg"></span>`;
+  deleteBtn.innerHTML = `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/delete.svg"></span>`;
   deleteBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     openDeleteModal(file, false);

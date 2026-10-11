@@ -810,10 +810,10 @@ function initCodeExecutor() {
     const text = codeOutputContent.textContent;
     if (text) {
       navigator.clipboard.writeText(text);
-      codeCopyOutput.innerHTML = `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/checkmark.svg"></span>`;
+      codeCopyOutput.innerHTML = `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/checkmark.svg"></span>`;
       await loadIcons(codeCopyOutput);
       setTimeout(async () => {
-        codeCopyOutput.innerHTML = `<span data-icon="https://shared-assets.danielersen.workers.dev/assets/icons/copy.svg"></span>`;
+        codeCopyOutput.innerHTML = `<span data-icon="https://shared-assets.lumaris.fr.eu.org/assets/icons/copy.svg"></span>`;
         await loadIcons(codeCopyOutput);
       }, 2000);
     }

@@ -181,17 +181,17 @@ document.addEventListener('site-navbar:refresh', (event) => {
 
 **Icon System**:
 Icons are loaded dynamically from SVG files:
-- Home: `https://shared-assets.danielersen.workers.dev/assets/icons/home.svg`
-- Grid: `https://shared-assets.danielersen.workers.dev/assets/icons/grid.svg`
-- Sparkles: `https://shared-assets.danielersen.workers.dev/assets/icons/sparkles.svg`
-- Study Notes: `https://shared-assets.danielersen.workers.dev/assets/icons/study-notes.svg`
-- Web: `https://shared-assets.danielersen.workers.dev/assets/icons/web.svg`
-- Database: `https://shared-assets.danielersen.workers.dev/assets/icons/database.svg`
-- Wrench: `https://shared-assets.danielersen.workers.dev/assets/icons/wrench.svg`
-- Settings: `https://shared-assets.danielersen.workers.dev/assets/icons/settings.svg`
-- Refresh: `https://shared-assets.danielersen.workers.dev/assets/icons/refresh.svg`
-- Logout: `https://shared-assets.danielersen.workers.dev/assets/icons/logout.svg`
-- More: `https://shared-assets.danielersen.workers.dev/assets/icons/more.svg`
+- Home: `https://shared-assets.lumaris.fr.eu.org/assets/icons/home.svg`
+- Grid: `https://shared-assets.lumaris.fr.eu.org/assets/icons/grid.svg`
+- Sparkles: `https://shared-assets.lumaris.fr.eu.org/assets/icons/sparkles.svg`
+- Study Notes: `https://shared-assets.lumaris.fr.eu.org/assets/icons/study-notes.svg`
+- Web: `https://shared-assets.lumaris.fr.eu.org/assets/icons/web.svg`
+- Database: `https://shared-assets.lumaris.fr.eu.org/assets/icons/database.svg`
+- Wrench: `https://shared-assets.lumaris.fr.eu.org/assets/icons/wrench.svg`
+- Settings: `https://shared-assets.lumaris.fr.eu.org/assets/icons/settings.svg`
+- Refresh: `https://shared-assets.lumaris.fr.eu.org/assets/icons/refresh.svg`
+- Logout: `https://shared-assets.lumaris.fr.eu.org/assets/icons/logout.svg`
+- More: `https://shared-assets.lumaris.fr.eu.org/assets/icons/more.svg`
 
 **Mobile Menu**:
 - Three-dot menu for additional options
