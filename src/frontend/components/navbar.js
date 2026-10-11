@@ -186,6 +186,7 @@ const NAVBAR_STYLE = `
       0 0 0 1px rgba(140, 236, 255, 0.04) inset;
     opacity: 0;
     pointer-events: none;
+    z-index: 0;
     transform: translate3d(0, 0, 0);
     transition:
       transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -389,7 +390,7 @@ const NAVBAR_STYLE = `
   }
 
   .more-item:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: transparent;
     border-color: transparent;
   }
 
@@ -479,7 +480,6 @@ const NAVBAR_TEMPLATE = `
       <div class="center" role="navigation" aria-label="Feature navigation">
         <div class="center-scroll" data-center-scroll tabindex="0">
           <div class="feature-list">
-            <span class="nav-indicator" data-hovering="false" aria-hidden="true"></span>
             ${NAV_ITEMS.map((item) => `
               <a class="feature" data-route="${item.slug}" href="${item.href}">
                 <span class="feature-icon" data-icon="${ICONS[item.icon] || ICONS.grid}"></span>
@@ -506,6 +506,7 @@ const NAVBAR_TEMPLATE = `
         </button>
       </div>
     </div>
+    <span class="nav-indicator" data-hovering="false" aria-hidden="true"></span>
   </div>
 
   <div class="more-menu" data-more-menu data-open="false" aria-hidden="true">
@@ -683,23 +684,23 @@ class SiteNavbar extends HTMLElement {
 
   _setupFeatureIndicator() {
     const root = this.shadowRoot;
-    const list = root?.querySelector(".feature-list");
-    if (!list || this._featureIndicatorCleanup) return;
+    const bar = root?.querySelector(".bar");
+    if (!bar || this._featureIndicatorCleanup) return;
 
-    const features = Array.from(list.querySelectorAll("[data-route]"));
-    const indicator = list.querySelector(".nav-indicator");
+    const features = Array.from(bar.querySelectorAll("[data-route], [data-home-link], .quick"));
+    const indicator = bar.querySelector(".nav-indicator");
     if (!indicator) return;
 
     features.forEach((feature) => feature.addEventListener("pointerenter", this._boundFeatureEnter));
-    list.addEventListener("pointerleave", this._boundFeatureLeave);
+    bar.addEventListener("pointerleave", this._boundFeatureLeave);
 
     this._featureIndicatorCleanup = () => {
       features.forEach((feature) => feature.removeEventListener("pointerenter", this._boundFeatureEnter));
-      list.removeEventListener("pointerleave", this._boundFeatureLeave);
+      bar.removeEventListener("pointerleave", this._boundFeatureLeave);
     };
 
     requestAnimationFrame(() => {
-      this._moveFeatureIndicator(list.querySelector('[data-route][data-active="true"]'), false);
+      this._moveFeatureIndicator(root.querySelector('[data-route][data-active="true"]'), false);
     });
   }
 
@@ -716,12 +717,16 @@ class SiteNavbar extends HTMLElement {
 
   _moveFeatureIndicator(feature, hovering) {
     const indicator = this.shadowRoot?.querySelector(".nav-indicator");
-    if (!indicator || !feature) return;
+    const bar = this.shadowRoot?.querySelector(".bar");
+    if (!indicator || !bar || !feature) return;
+
+    const barRect = bar.getBoundingClientRect();
+    const featureRect = feature.getBoundingClientRect();
 
     indicator.dataset.hovering = String(hovering);
-    indicator.style.width = `${feature.offsetWidth}px`;
-    indicator.style.height = `${feature.offsetHeight}px`;
-    indicator.style.transform = `translate3d(${feature.offsetLeft}px, ${feature.offsetTop}px, 0)`;
+    indicator.style.width = `${featureRect.width}px`;
+    indicator.style.height = `${featureRect.height}px`;
+    indicator.style.transform = `translate3d(${featureRect.left - barRect.left}px, ${featureRect.top - barRect.top}px, 0)`;
   }
 
   _observeHeight() {
