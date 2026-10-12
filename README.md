@@ -3,7 +3,11 @@
   <img height="155" src="src/frontend/assets/logo/cloudflare_d1.png" style="border-radius: 100px;" />
 </p>
 
-<h1 align="center">Lumaris</h1>
+<p align="center">
+  <img height="155" src="src/frontend/assets/other/mega.png" style="border-radius: 100px;" />
+</p>
+
+<h1 align="center">Lumaris client Worker</h1>
 
 <p align="center">
   <strong>Server code for lumaris.fr.eu.org</strong>
