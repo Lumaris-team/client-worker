@@ -1,6 +1,6 @@
 <p align="center">
   <img width="155" src="src/frontend/assets/other/cloudflare_worker.png" style="border-radius: 100px;" />
-  <img width="155" src="src/frontend/assets/logo/logo.png" style="border-radius: 100px;" />
+  <img width="155" src="src/frontend/assets/logo/cloudflare_d1.png" style="border-radius: 100px;" />
 </p>
 
 <h1 align="center">Lumaris</h1>
