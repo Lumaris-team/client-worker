@@ -1,6 +1,6 @@
 <p align="center">
   <img height="155" src="src/frontend/assets/other/cloudflare_worker.png" style="border-radius: 100px;" />
-  <img height="155" src="src/frontend/assets/logo/cloudflare_d1.png" style="border-radius: 100px;" />
+  <img height="155" src="src/frontend/assets/other/cloudflare_d1.png" style="border-radius: 100px;" />
 </p>
 
 <p align="center">
