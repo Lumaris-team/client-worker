@@ -582,7 +582,7 @@ window.location.href = '/pages/workspace';
 All pages include a navigation bar component for consistent navigation:
 
 ```javascript
-import { Navbar } from '../components/navbar.js';
+import 'https://shared-assets.lumaris.fr.eu.org/navbar.js';
 const navbar = new Navbar('navbar-container');
 navbar.render();
 ```
@@ -641,7 +641,7 @@ mkdir src/frontend/pages/new-page
     <h1>New Page</h1>
     <!-- Page content -->
   </main>
-  <script type="module" src="../components/navbar.js"></script>
+  <script type="module" src="https://shared-assets.lumaris.fr.eu.org/navbar.js"></script>
   <script type="module" src="script.js"></script>
 </body>
 </html>

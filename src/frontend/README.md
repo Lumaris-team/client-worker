@@ -101,7 +101,7 @@ pages/[page-name]/
 
 ## 🔑 Key Components
 
-### Navbar Component (`components/navbar.js`)
+### Navbar Component (shared-assets)
 
 **Features:**
 - Responsive navigation menu
@@ -111,7 +111,7 @@ pages/[page-name]/
 
 **Usage:**
 ```javascript
-import { Navbar } from '../components/navbar.js';
+import 'https://shared-assets.lumaris.fr.eu.org/navbar.js';
 const navbar = new Navbar(container);
 ```
 

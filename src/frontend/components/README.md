@@ -124,7 +124,7 @@ this.shadowRoot.innerHTML = `
 
 **JavaScript Usage**:
 ```javascript
-import './components/navbar.js';
+import 'https://shared-assets.lumaris.fr.eu.org/navbar.js';
 
 // In your HTML
 const navbar = document.createElement('site-navbar');
@@ -213,7 +213,7 @@ Icons are loaded dynamically from SVG files:
 
 1. **Import component**:
 ```javascript
-import './components/navbar.js';
+import 'https://shared-assets.lumaris.fr.eu.org/navbar.js';
 ```
 
 2. **Add to HTML**:
