@@ -116,7 +116,6 @@ The backend follows a service-oriented architecture:
 **Shared Libraries:**
 - `auth.js`: Authentication utilities
 - `supabase.js`: Supabase client configuration
-- `turnstile.js`: Turnstile CAPTCHA integration
 - `settings.js`: Settings management
 - `icons.js`: Icon system
 

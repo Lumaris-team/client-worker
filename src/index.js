@@ -77,7 +77,6 @@ export default {
       return new Response(JSON.stringify({
         supabaseUrl: env.SUPABASE_URL ?? null,
         supabaseAnonKey: env.SUPABASE_ANON_KEY ?? null,
-        turnstileSiteKey: env.TURNSTILE_SITE_KEY ?? null,
       }), {
         headers: corsHeaders
       });

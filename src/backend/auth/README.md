@@ -56,7 +56,6 @@ auth/
 ├── index.js          # Main authentication API handler
 ├── supabase_jwt.js   # Supabase JWT verification
 ├── session.js        # Session token management
-├── turnstile.js      # Turnstile CAPTCHA verification
 └── encoding.js       # Encoding utilities
 ```
 
@@ -74,7 +73,6 @@ export async function Auth(env, path, method, body, request)
 ```
 
 **Routes**:
-- `POST /api/auth/turnstile`: Verify Turnstile token
 - `POST /api/auth/session`: Exchange Supabase token for session token
 - `POST /api/auth/check`: Validate session token
 
@@ -138,29 +136,6 @@ export async function verifySessionToken(env, token)
 - **Algorithm**: HS256
 - **Secret**: Configured in environment variables
 
-### Turnstile Verification (`turnstile.js`)
-
-**Purpose**: Verify Cloudflare Turnstile CAPTCHA tokens
-
-**Key Function**:
-```javascript
-export async function verifyTurnstileToken(env, token, remoteip)
-```
-
-**Process**:
-1. Extract token from request
-2. Send verification request to Cloudflare
-3. Check response validity
-4. Return verification result
-
-**Response**:
-```javascript
-{
-  success: true,
-  reason: "valid"
-}
-```
-
 ### Encoding Utilities (`encoding.js`)
 
 **Purpose**: Provide encoding and decoding utilities
@@ -174,51 +149,6 @@ export async function verifyTurnstileToken(env, token, remoteip)
 
 ## 🔌 API Endpoints
 
-### POST `/api/auth/turnstile`
-
-Verify Turnstile CAPTCHA token before login.
-
-**Request Body**:
-```json
-{
-  "token": "turnstile_token_string"
-}
-```
-
-**Headers**:
-```
-CF-Connecting-IP: client_ip_address
-```
-
-**Response**:
-```json
-{
-  "success": true,
-  "reason": "valid"
-}
-```
-
-**Error Response**:
-```json
-{
-  "success": false,
-  "reason": "invalid_token"
-}
-```
-
-**Usage Example**:
-```javascript
-const response = await fetch('/api/auth/turnstile', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ token: turnstileToken })
-});
-
-const result = await response.json();
-if (result.success) {
-  // Proceed with login
-}
-```
 
 ### POST `/api/auth/session`
 
@@ -307,22 +237,6 @@ if (!result.valid) {
 ---
 
 ## 🔒 Security Features
-
-### Turnstile CAPTCHA
-
-**Purpose**: Prevent automated bot attacks
-
-**Implementation**:
-- Invisible CAPTCHA mode
-- Token verification before login
-- IP-based validation
-- Graceful degradation when not configured
-
-**Configuration**:
-```toml
-[vars]
-TURNSTILE_SECRET_KEY = "your_secret_key"
-```
 
 ### JWT Token Security
 
@@ -502,12 +416,6 @@ test('Auth endpoint exchanges tokens correctly', async () => {
 - Check token expiration time
 - Verify Supabase configuration
 
-**Turnstile Verification Failing**:
-- Check TURNSTILE_SECRET_KEY configuration
-- Verify token is not expired
-- Check IP address forwarding
-- Verify Cloudflare API access
-
 **Session Token Expiring Too Quickly**:
 - Check expiration time configuration
 - Verify system time synchronization
@@ -534,7 +442,6 @@ console.log("Session issuance:", sessionResult);
 ## 📚 Additional Resources
 
 - [Supabase Authentication Documentation](https://supabase.com/docs/guides/auth)
-- [Cloudflare Turnstile Documentation](https://developers.cloudflare.com/turnstile/)
 - [JWT Best Practices](https://tools.ietf.org/html/rfc8725)
 - [OWASP Authentication Guidelines](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
 

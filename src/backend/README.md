@@ -40,7 +40,6 @@ backend/
 │   ├── index.js          # Main auth API handler
 │   ├── supabase_jwt.js   # Supabase JWT verification
 │   ├── session.js        # Session token management
-│   ├── turnstile.js      # Turnstile CAPTCHA verification
 │   └── encoding.js       # Encoding utilities
 ├── ai/                    # AI-powered features
 │   ├── index.js          # Main AI API handler
@@ -145,14 +144,12 @@ try {
 - `verifySupabaseToken(token, supabaseUrl)`: Verify Supabase JWT
 - `issueSessionToken(env, payload)`: Generate session token
 - `verifySessionToken(env, token)`: Validate session token
-- `verifyTurnstileToken(env, token, remoteip)`: Verify Turnstile CAPTCHA
 
 **API Endpoints**:
-- `POST /api/auth/turnstile`: Verify Turnstile token
 - `POST /api/auth/session`: Exchange Supabase token for session token
 - `POST /api/auth/check`: Validate session token
 
-**Dependencies**: Supabase, Cloudflare Turnstile
+**Dependencies**: Supabase
 
 ### AI Service (`ai/`)
 
@@ -286,24 +283,6 @@ try {
 ## 🔌 API Endpoints
 
 ### Authentication Endpoints
-
-#### POST `/api/auth/turnstile`
-Verify Turnstile CAPTCHA token
-
-**Request Body**:
-```json
-{
-  "token": "turnstile_token"
-}
-```
-
-**Response**:
-```json
-{
-  "success": true,
-  "reason": "valid"
-}
-```
 
 #### POST `/api/auth/session`
 Exchange Supabase token for session token
