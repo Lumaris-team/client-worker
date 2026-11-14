@@ -61,6 +61,10 @@ This code is deployed on **Cloudflare Workers**, a serverless computing platform
 - **Automatic Scalability**: Automatically handles traffic spikes
 - **Integrated Database**: D1 (SQLite-compatible) for data storage
 - **Cloud Storage**: MEGA.nz integration for files
+
+MEGA utilise Cloudflare Secrets Store. Le Worker doit disposer de deux bindings
+Secrets Store nommés `MEGA_EMAIL` et `MEGA_PASSWORD`; le code récupère leurs
+valeurs avec `await binding.get()` et ne les expose pas dans les réponses.
 - **Cutting-edge AI**: Workers AI for AI features
 
 ---

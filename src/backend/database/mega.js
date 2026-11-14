@@ -83,8 +83,10 @@ async function retryOperation(operation, attempts = 5, baseTimeoutMs = 120000, b
 }
 
 export async function getClient(env, forceRefresh = false) {
-  const email = env.MEGA_EMAIL;
-  const password = env.MEGA_PASSWORD;
+  const [email, password] = await Promise.all([
+    env.MEGA_EMAIL?.get(),
+    env.MEGA_PASSWORD?.get(),
+  ]);
   if (!email || !password) {
     throw new Error("Missing MEGA_EMAIL or MEGA_PASSWORD");
   }
