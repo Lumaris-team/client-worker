@@ -17,6 +17,11 @@
   <em>Intelligent educational platform for school management and AI-assisted learning</em>
 </p>
 
+This Worker is backend-only. The dashboard pages are served by
+`main-website` under `/account/{username}`; requests to `/api/*` are proxied
+there to the corresponding `client-worker.{username}-cloudflare-account.workers.dev`
+backend.
+
 <p align="center">
   <a href="#-about-this-code">About</a> •
   <a href="#what-you-can-do">What you can do</a> •

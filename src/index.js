@@ -51,14 +51,6 @@ export default {
     } 
     
     // =========================
-    // ⛔ BLOCK WORKERS.DEV URLS
-    // =========================
-    const host = url.hostname;
-    if (host.includes("workers.dev")) {
-      return new Response("Access denied. Use custom domain only.", { status: 403 });
-    }
-
-    // =========================
     // 📶 MAIN API
     // =========================
     /// CORS
@@ -75,6 +67,10 @@ export default {
       "Access-Control-Allow-Headers":
         "*"
     };
+
+    if (method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
     
     // Public Supabase config for the frontend (anon key is public).
     if (url.pathname === "/api/config") {
@@ -156,74 +152,7 @@ export default {
       }
     }
 
-    // =========================
-    // 🌐 SITE (Cloudflare assets)
-    // =========================
-    
-    // Add CORS headers for assets to allow browser loading
-    if (url.pathname.startsWith("/assets/")) {
-      const assetResponse = await env.ASSETS.fetch(request);
-      
-      if (assetResponse.ok) {
-        // For SVG files, serve with correct content-type
-        const isSvg = url.pathname.endsWith('.svg');
-        const contentType = isSvg ? 'image/svg+xml; charset=utf-8' : (assetResponse.headers.get("Content-Type") || "application/octet-stream");
-        
-        return new Response(assetResponse.body, {
-          headers: {
-            "Content-Type": contentType,
-            "Cache-Control": "public, max-age=3600",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET",
-            "Access-Control-Allow-Headers": "*"
-          }
-        });
-      }
-      
-      return assetResponse;
-    }
-    
-    // "/", "/pages" and "/pages/" all land on home. Supabase sends users to
-    // "/pages/" after login; serving home there lets the client guard run and
-    // bounce to the originally-requested page (post-auth redirect cookie).
-    if (
-      url.pathname === "/" ||
-      url.pathname === "" ||
-      url.pathname === "/pages" ||
-      url.pathname === "/pages/"
-    ) {
-      const assetUrl = new URL(request.url);
-      assetUrl.pathname = "/pages/home/index.html";
-      return env.ASSETS.fetch(new Request(assetUrl, request));
-    }
-   
-    if (url.pathname === "/settings" || url.pathname === "/settings/") {
-      const assetUrl = new URL(request.url);
-      assetUrl.pathname = "/pages/settings/index.html";
-      return env.ASSETS.fetch(new Request(assetUrl, request));
-    }
-
-    if (url.pathname === `/pages/parent`) {
-      const assetUrl = new URL(request.url);
-      assetUrl.pathname = "/pages/workspace/index2.html";
-      return env.ASSETS.fetch(new Request(assetUrl, request));
-    }
-   
-    const pageMatch = url.pathname.match(/^\/pages\/([^/]+)\/?$/);
-    if (pageMatch) {
-      const assetUrl = new URL(request.url);
-      assetUrl.pathname = `/pages/${pageMatch[1]}/index.html`;
-      return env.ASSETS.fetch(new Request(assetUrl, request));
-    }
-   
-   // Handle /study-notes route (alias for /pages/study-notes)
-   if (url.pathname === "/study-notes") {
-     const assetUrl = new URL(request.url);
-     assetUrl.pathname = "/pages/study-notes/index.html";
-     return env.ASSETS.fetch(new Request(assetUrl, request));
-   }
-
-    return env.ASSETS.fetch(request)
+    return new Response("Not found", { status: 404 });
   },
 
   async scheduled(event, env, ctx) {
