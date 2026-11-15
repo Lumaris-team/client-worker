@@ -1,5 +1,5 @@
 // Workflows
-import { CheckGradesWorkflow } from "./workflows/check_grades";
+import { CheckGradesWorkflow } from "./workflows/check_grades.js";
 
 // API features
 import { EDfunction } from "./backend/ecole_directe/index.js";
