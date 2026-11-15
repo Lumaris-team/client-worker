@@ -7,14 +7,10 @@
   "vars": {
     "MODE": "production",
     "SITE": "enabled",
-    "JWT_SECRET": "generate-a-secure-random-key",
-    "JWT": "generate-a-secure-random-key"
   },
   "env": {
     "production": {
       "vars": {
-        "JWT_SECRET": "generate-a-secure-random-key",
-        "JWT": "generate-a-secure-random-key"
       }
     }
   },

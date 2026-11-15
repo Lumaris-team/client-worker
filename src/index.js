@@ -5,7 +5,7 @@ import { CheckGradesWorkflow } from "./workflows/check_grades.js";
 import { EDfunction } from "./backend/ecole_directe/index.js";
 import { AIfunction } from "./backend/ai/index.js";
 import { Cache } from "./backend/cache/index.js";
-import { Auth, verifySessionToken } from "./backend/auth/index.js";
+import { Auth, issueSessionToken, verifySessionToken } from "./backend/auth/index.js";
 import { Pomodoro } from "./backend/database/pomodoro.js";
 import { WebsitesFunction } from "./backend/database/websites.js";
 import { FilesFunction, initializeFolderArchitecture } from "./backend/database/files_management.js";
@@ -83,6 +83,25 @@ export default {
     }
 
     // Auth: verify Supabase token + issue/validate server session tokens.
+    if (url.pathname === "/api/auth/one-time" && method === "POST") {
+      const username = String(body?.username || "").trim();
+      const token = String(body?.token || "");
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      const verifier = `https://login-client-worker.${username}-cloudflare-account.workers.dev/api/verify`;
+      const verified = await fetch(verifier, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "CF-Connecting-IP": ip },
+        body: JSON.stringify({ username, token, ip }),
+      });
+      if (!verified.ok) return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: corsHeaders });
+      return new Response(JSON.stringify(await issueSessionToken(env, { sub: username })), { headers: corsHeaders });
+    }
+
+    if (url.pathname === "/api/auth/invalidate" && method === "POST") {
+      await caches.default.delete(new Request("https://cache/session_tokens"));
+      return new Response(JSON.stringify({ invalidated: true }), { headers: corsHeaders });
+    }
+
     if (url.pathname.startsWith("/api/auth/")) {
       try {
         const resp = await Auth(env, url.pathname.slice("/api/auth/".length), method, body, request);
@@ -96,6 +115,7 @@ export default {
         });
       }
     }
+
 
     if (url.pathname.startsWith("/api/")) {
       // Every data route requires a valid server-issued JWT in the

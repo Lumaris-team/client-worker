@@ -12,9 +12,10 @@ import { stringToBase64Url, bytesToBase64Url, decodeJwtPart } from "./encoding.j
 const REGISTRY_KEY = "session_tokens";
 export const SESSION_TTL_SECONDS = 5 * 60; // 5 minutes
 
-export function resolveSigningSecret(env) {
-  const secret = env?.JWT_SECRET || env?.JWT;
-  if (!secret) {
+export async function resolveSigningSecret(env) {
+  const binding = env?.JWT_SECRET || env?.JWT;
+  const secret = typeof binding?.get === "function" ? await binding.get() : binding;
+  if (!secret || secret === "generate-a-secure-random-key") {
     throw new Error("Missing signing secret (JWT_SECRET or JWT).");
   }
   return secret;

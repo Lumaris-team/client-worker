@@ -261,6 +261,12 @@ This code respects data protection principles:
 ### Best practices
 
 - Don't modify secret keys without knowing what you're doing
+
+## Authentication bootstrap
+
+The Worker must have a persistent secret-store binding named `JWT_SECRET`.
+It is used to sign the short-lived JWT issued after a one-time login token is
+validated. Do not put this value in `wrangler.jsonc` or source control.
 - Backup your configuration before modifications
 - Always test changes in local environment
 - Monitor logs to detect anomalies
