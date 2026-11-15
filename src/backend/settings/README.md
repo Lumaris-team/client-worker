@@ -376,7 +376,7 @@ function isValidColor(color) {
 **Event Tracking**:
 ```javascript
 async function trackFeatureUsage(userId, feature) {
-  await env.customization.prepare(`
+  await env.settings.prepare(`
     INSERT INTO feature_usage (user_id, feature, timestamp)
     VALUES (?, ?, ?)
   `).bind(userId, feature, new Date().toISOString()).run();
@@ -386,7 +386,7 @@ async function trackFeatureUsage(userId, feature) {
 **Aggregation Queries**:
 ```javascript
 async function getFeatureStats(env) {
-  const result = await env.customization.prepare(`
+  const result = await env.settings.prepare(`
     SELECT feature, COUNT(*) as usage_count
     FROM feature_usage
     WHERE timestamp > datetime('now', '-30 days')

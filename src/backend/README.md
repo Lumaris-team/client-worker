@@ -458,7 +458,7 @@ The backend uses Cloudflare D1 for persistent storage:
 **Connection**:
 ```javascript
 // Database access through env binding
-const result = await env.customization.prepare("SELECT * FROM users WHERE id = ?").bind(userId).all();
+const result = await env.settings.prepare("SELECT * FROM users WHERE id = ?").bind(userId).all();
 ```
 
 ### KV Storage Usage

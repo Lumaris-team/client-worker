@@ -24,7 +24,7 @@ export async function CustomizationFunction(env, path, method, body, sessionPayl
 
 async function getCustomizationSettings(env, userId) {
   try {
-    const db = env.customization;
+    const db = env.settings;
     
     // Get user's customization settings
     const result = await db.prepare(
@@ -70,7 +70,7 @@ async function getCustomizationSettings(env, userId) {
 
 async function setCustomizationSettings(env, userId, settings) {
   try {
-    const db = env.customization;
+    const db = env.settings;
     
     // Normalize settings
     const normalizedSettings = {
