@@ -21,11 +21,6 @@ vars = { JWT_SECRET = "generate-a-secure-random-key", JWT = "generate-a-secure-r
 name = "AI"
 binding = "AI"
 
-# Deleted conversations (KV namespace)
-[[kv_namespaces]]
-binding = "deleted_chats"
-id = "ece9f46bc7ca471eac5be9d214de322e"
-
 # Customization settings (D1 database)
 [[d1_databases]]
 binding = "customization"
