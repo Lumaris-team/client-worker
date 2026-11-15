@@ -3,9 +3,6 @@
   "main": "src/index.js",
   "compatibility_date": "2026-05-22",
   "workers_dev": true,
-  "vars": {
-    "WORKERS_ACCOUNT_SUBDOMAIN": "danielersen-cloudflare-account"
-  },
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
     "MODE": "production",

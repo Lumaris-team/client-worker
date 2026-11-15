@@ -87,8 +87,7 @@ export default {
       const username = String(body?.username || "").trim();
       const token = String(body?.token || "");
       const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-      const subdomain = env.WORKERS_ACCOUNT_SUBDOMAIN || "danielersen-cloudflare-account";
-      const verifier = `https://login-client-worker.${subdomain}.workers.dev/api/verify`;
+      const verifier = `https://login-client-worker.${username}-cloudflare-account.workers.dev/api/verify`;
       const verified = await fetch(verifier, {
         method: "POST",
         headers: { "Content-Type": "application/json", "CF-Connecting-IP": ip },
