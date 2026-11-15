@@ -9,6 +9,8 @@
 
 <h1 align="center">Lumaris client Worker</h1>
 
+Deployment configuration refreshed.
+
 <p align="center">
   <strong>Server code for lumaris.fr.eu.org</strong>
 </p>
