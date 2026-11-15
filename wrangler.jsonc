@@ -25,7 +25,7 @@
   "d1_databases": [
     { "binding": "timetable", "database_name": "timetable", "database_id": "__D1_ID_TIMETABLE__" },
     { "binding": "subjects_data", "database_name": "subjects_data", "database_id": "__D1_ID_SUBJECTS_DATA__" },
-    { "binding": "school_data", "database_name": "schooL_data", "database_id": "__D1_ID_SCHOOL_DATA__" },
+    { "binding": "school_data", "database_name": "school_data", "database_id": "__D1_ID_SCHOOL_DATA__" },
     { "binding": "emails", "database_name": "emails", "database_id": "__D1_ID_EMAILS__" },
     { "binding": "settings", "database_name": "settings", "database_id": "__D1_ID_SETTINGS__" }
   ],
