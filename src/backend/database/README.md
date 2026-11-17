@@ -697,7 +697,7 @@ try {
 
 **Database Connection Issues**:
 - Check D1 binding configuration
-- Verify database ID in wrangler.toml
+- Check D1 binding configuration in `wrangler.jsonc`
 - Check network connectivity
 - Review Cloudflare dashboard
 

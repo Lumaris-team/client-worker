@@ -88,7 +88,7 @@ try {
 
 **File**: `check_grades.js`
 
-**Schedule**: Every 4 hours (configured in `wrangler.toml`)
+**Schedule**: Every 4 hours (configured in `wrangler.jsonc`)
 
 **Functionality**:
 1. Fetches new grades from ÉcoleDirecte API
@@ -158,7 +158,7 @@ crons = ["0 */4 * * *"]  # Every 4 hours
 
 ### Wrangler Configuration
 
-Workflows are configured in `wrangler.toml`:
+Workflows are configured in `wrangler.jsonc`:
 
 ```toml
 [[workflows]]
@@ -231,7 +231,7 @@ export class NewWorkflow extends WorkflowEntrypoint {
 }
 ```
 
-2. **Add to wrangler.toml**:
+2. **Add to wrangler.jsonc**:
 ```toml
 [[workflows]]
 name = "new_workflow"
@@ -377,7 +377,7 @@ curl -X POST https://your-worker.workers.dev/workflows/check_grades
 
 ### Observability
 
-Enable workflow observability in `wrangler.toml`:
+Enable workflow observability in `wrangler.jsonc`:
 
 ```toml
 [observability]
@@ -430,7 +430,7 @@ Set up alerts for:
 ### Common Issues
 
 **Workflow Not Triggering**:
-- Check cron expression in `wrangler.toml`
+- Check cron expression in `wrangler.jsonc`
 - Verify workflow binding configuration
 - Check scheduled event handler in main index.js
 

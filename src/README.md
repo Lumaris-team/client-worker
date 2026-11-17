@@ -343,7 +343,7 @@ All source code is bundled and optimized automatically during deployment.
 ## 📝 Notes
 
 - The entire codebase uses ES Modules for modern JavaScript support
-- Cloudflare Workers compatibility is maintained through `wrangler.toml` configuration
+- Cloudflare Workers compatibility is maintained through `wrangler.jsonc` configuration
 - Static assets are served through the Assets binding for optimal performance
 - Background tasks are handled through the Workflows system
 - All services are designed for edge deployment with minimal cold starts

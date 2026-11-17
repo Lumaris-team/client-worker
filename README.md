@@ -127,7 +127,7 @@ The code requires several configurations in your Cloudflare account:
 - **Cloudflare D1**: For the database
 - **Cloudflare KV**: For caching
 
-**Configuration in `wrangler.toml`:**
+**Configuration in `wrangler.jsonc`:**
 ```toml
 name = "dashboard"
 main = "src/index.js"
@@ -174,7 +174,7 @@ client-worker/
 │   └── workflows/            # Background tasks
 ├── migrations/               # Database migrations
 ├── package.json             # Dependencies
-├── wrangler.toml           # Cloudflare configuration
+├── wrangler.jsonc           # Cloudflare configuration
 └── README.md               # This file
 ```
 

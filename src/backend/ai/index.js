@@ -65,14 +65,14 @@ function formatModelName(modelId) {
 // Function to fetch available models from Cloudflare Workers AI
 async function fetchCloudflareModels(env) {
   if (!env.AI) {
-    throw new Error("AI binding not configured. Please add [ai] binding = \"AI\" to wrangler.toml");
+    throw new Error("AI binding not configured. Please add [ai] binding = \"AI\" to wrangler.jsonc");
   }
   
   const accountId = env.CLOUDFLARE_ACCOUNT_ID;
   const apiToken = env.CLOUDFLARE_API_TOKEN;
   
   if (!accountId) {
-    throw new Error("CLOUDFLARE_ACCOUNT_ID not configured. Please add it to wrangler.toml [vars]");
+    throw new Error("CLOUDFLARE_ACCOUNT_ID not configured. Please add [ai] binding = \"AI\" to wrangler.jsonc");
   }
   
   if (!apiToken) {
