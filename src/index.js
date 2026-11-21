@@ -13,7 +13,19 @@ import { StudyNotesFunction } from "./backend/database/study_notes.js";
 import { ToolsFunction } from "./backend/tools/index.js";
 import { StatsFunction } from "./backend/settings/stats.js";
 import { CustomizationFunction } from "./backend/settings/customization.js";
-  
+
+// Helper to extract username from JWT (without verification)
+function extractUsernameFromJWT(token) {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
+    return payload.sub || null;
+  } catch (e) {
+    return null;
+  }
+}
+
 import { sendMail } from "./backend/notifications/mail.js";
 
 async function sendErrorEmail(env, error, context) {
@@ -82,7 +94,7 @@ export default {
       });
     }
 
-    // Auth: verify Supabase token + issue/validate server session tokens.
+    // Auth: verify one-time token from login-client-worker and issue JWT
     if (url.pathname === "/api/auth/one-time" && method === "POST") {
       const username = String(body?.username || "").trim();
       const token = String(body?.token || "");
@@ -94,7 +106,11 @@ export default {
         body: JSON.stringify({ username, token, ip }),
       });
       if (!verified.ok) return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: corsHeaders });
-      return new Response(JSON.stringify(await issueSessionToken(env, { sub: username })), { headers: corsHeaders });
+      const verifyResult = await verified.json();
+      if (!verifyResult.valid || !verifyResult.jwt) {
+        return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: corsHeaders });
+      }
+      return new Response(JSON.stringify({ token: verifyResult.jwt, exp: verifyResult.expiresIn, valid: true }), { headers: corsHeaders });
     }
 
     if (url.pathname === "/api/auth/invalidate" && method === "POST") {
@@ -102,31 +118,67 @@ export default {
       return new Response(JSON.stringify({ invalidated: true }), { headers: corsHeaders });
     }
 
-    if (url.pathname.startsWith("/api/auth/")) {
-      try {
-        const resp = await Auth(env, url.pathname.slice("/api/auth/".length), method, body, request);
-        return new Response(JSON.stringify(resp), { headers: corsHeaders });
-      } catch (e) {
-        console.error("AUTH ERROR:", e?.stack || e);
-        await sendErrorEmail(env, e, "AUTH");
-        return new Response(JSON.stringify({ valid: false, error: e?.message }), {
-          status: 500,
-          headers: corsHeaders,
-        });
+    // Auth: verify JWT from login-client-worker
+    if (url.pathname === "/api/auth/check" && method === "POST") {
+      const token = String(body?.token || "");
+      const username = String(body?.username || "");
+      
+      // Verify JWT with login-client-worker
+      const verifier = `https://login-client-worker.${username}-cloudflare-account.workers.dev/api/verify-jwt`;
+      const verified = await fetch(verifier, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, username }),
+      });
+      
+      if (!verified.ok) {
+        return new Response(JSON.stringify({ valid: false }), { headers: corsHeaders });
       }
+      
+      const verifyResult = await verified.json();
+      return new Response(JSON.stringify({ valid: verifyResult.valid }), { headers: corsHeaders });
     }
 
 
     if (url.pathname.startsWith("/api/")) {
-      // Every data route requires a valid server-issued JWT in the
-      // Authorization header. /api/config and /api/auth/* are intentionally
-      // reachable without one (they bootstrap the login + token exchange), and
-      // google site verification is handled earlier, before any gating.
+      // Every data route requires a valid JWT from login-client-worker
       const authHeader = headers.get("Authorization") || "";
       const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : null;
-      const session = await verifySessionToken(env, bearer);
-      if (!session.valid) {
-        return new Response(JSON.stringify({ error: "unauthorized", reason: session.reason }), {
+      
+      if (!bearer) {
+        return new Response(JSON.stringify({ error: "unauthorized", reason: "missing_token" }), {
+          status: 401,
+          headers: corsHeaders,
+        });
+      }
+      
+      // Extract username from JWT to know which login-client-worker to verify with
+      const username = extractUsernameFromJWT(bearer);
+      if (!username) {
+        return new Response(JSON.stringify({ error: "unauthorized", reason: "invalid_token" }), {
+          status: 401,
+          headers: corsHeaders,
+        });
+      }
+      
+      // Verify JWT with login-client-worker
+      const verifier = `https://login-client-worker.${username}-cloudflare-account.workers.dev/api/verify-jwt`;
+      const verified = await fetch(verifier, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: bearer, username }),
+      });
+      
+      if (!verified.ok) {
+        return new Response(JSON.stringify({ error: "unauthorized", reason: "verification_failed" }), {
+          status: 401,
+          headers: corsHeaders,
+        });
+      }
+      
+      const verifyResult = await verified.json();
+      if (!verifyResult.valid) {
+        return new Response(JSON.stringify({ error: "unauthorized", reason: verifyResult.reason || "invalid" }), {
           status: 401,
           headers: corsHeaders,
         });
