@@ -16,7 +16,7 @@ This directory contains the authentication and authorization services for the Lu
 
 ## 🎯 Overview
 
-The authentication service provides a comprehensive security layer for the Lumaris platform, integrating with Supabase for user management and Cloudflare Turnstile for bot protection. The service handles:
+The authentication service provides a comprehensive security layer for the Lumaris platform, using custom JWT tokens issued by login-client-worker and Cloudflare Turnstile for bot protection. The service handles:
 
 - **User Authentication**: Login, logout, and session management
 - **Token Management**: JWT token generation and validation
@@ -26,12 +26,13 @@ The authentication service provides a comprehensive security layer for the Lumar
 
 ### Security Architecture
 
-The authentication system uses a dual-token approach:
+The authentication system uses a custom JWT approach:
 
-1. **Supabase Access Token**: Long-lived token from Supabase authentication
-2. **Server Session Token**: Short-lived JWT token issued by the server
+1. **One-Time Token**: Short-lived token for initial authentication
+2. **JWT Token**: Long-lived token issued by login-client-worker
+3. **Service Binding**: Secure communication between workers
 
-This provides enhanced security by limiting the exposure of long-lived tokens.
+This provides enhanced security by limiting the exposure of credentials.
 
 ---
 
@@ -40,13 +41,12 @@ This provides enhanced security by limiting the exposure of long-lived tokens.
 ### Authentication Flow
 
 ```
-1. User Login → Supabase Authentication
-2. Supabase Token → Client receives access_token
-3. Token Exchange → Client sends access_token to /api/auth/session
-4. Server Verification → Server validates Supabase token
-5. Session Token → Server issues short-lived JWT
-6. API Calls → Client uses session token for API requests
-7. Token Refresh → Automatic refresh on expiration
+1. User Login → login-client-worker (with Turnstile)
+2. One-Time Token → Client receives token
+3. Token Exchange → Client sends token to /api/auth/exchange
+4. JWT Issuance → login-client-worker issues JWT
+5. API Calls → Client uses JWT for API requests
+6. JWT Renewal → Automatic renewal every 10 minutes
 ```
 
 ### Module Structure
@@ -54,7 +54,6 @@ This provides enhanced security by limiting the exposure of long-lived tokens.
 ```
 auth/
 ├── index.js          # Main authentication API handler
-├── supabase_jwt.js   # Supabase JWT verification
 ├── session.js        # Session token management
 └── encoding.js       # Encoding utilities
 ```
@@ -73,91 +72,45 @@ export async function Auth(env, path, method, body, request)
 ```
 
 **Routes**:
-- `POST /api/auth/session`: Exchange Supabase token for session token
-- `POST /api/auth/check`: Validate session token
+- `POST /api/auth/exchange`: Exchange one-time token for JWT
+- `POST /api/auth/verify-jwt`: Verify JWT token
 
 **Usage**:
 ```javascript
 import { Auth } from './backend/auth/index.js';
 
-const response = await Auth(env, 'session', 'POST', body, request);
-```
-
-### Supabase JWT Verification (`supabase_jwt.js`)
-
-**Purpose**: Verify Supabase JWT tokens
-
-**Key Function**:
-```javascript
-export async function verifySupabaseToken(token, supabaseUrl)
-```
-
-**Process**:
-1. Extract JWT from token
-2. Verify signature using Supabase JWT secret
-3. Check token expiration
-4. Extract user payload
-5. Return validation result
-
-**Response**:
-```javascript
-{
-  valid: true,
-  payload: {
-    user_id: "user_id",
-    email: "user@example.com",
-    exp: 1234567890
-  }
-}
+const response = await Auth(env, 'exchange', 'POST', body, request);
 ```
 
 ### Session Management (`session.js`)
 
-**Purpose**: Manage server session tokens
+**Purpose**: JWT token verification and session management
 
 **Key Functions**:
 ```javascript
-export async function issueSessionToken(env, payload)
 export async function verifySessionToken(env, token)
+export async function issueSessionToken(env, payload)
 ```
 
-**Token Structure**:
-```javascript
-{
-  user_id: "user_id",
-  email: "user@example.com",
-  iat: issued_at_timestamp,
-  exp: expiration_timestamp
-}
-```
-
-**Token Configuration**:
-- **Expiration**: 1 hour (3600 seconds)
-- **Algorithm**: HS256
-- **Secret**: Configured in environment variables
-
-### Encoding Utilities (`encoding.js`)
-
-**Purpose**: Provide encoding and decoding utilities
-
-**Functions**:
-- Base64 encoding/decoding
-- URL-safe encoding
-- JWT encoding/decoding helpers
+**Process**:
+1. Verify JWT signature
+2. Check token expiration
+3. Extract user payload
+4. Return validation result
 
 ---
 
-## 🔌 API Endpoints
+## � API Endpoints
 
+### POST /api/auth/exchange
 
-### POST `/api/auth/session`
-
-Exchange Supabase access token for server session token.
+**Purpose**: Exchange one-time token for JWT
 
 **Request Body**:
 ```json
 {
-  "access_token": "supabase_access_token"
+  "username": "user",
+  "oneTimeToken": "token"
 }
 ```
 
@@ -165,42 +118,19 @@ Exchange Supabase access token for server session token.
 ```json
 {
   "valid": true,
-  "token": "server_session_token",
-  "exp": 1234567890,
-  "expiresIn": 3600
+  "jwt": "jwt.token.here",
+  "oneTimeToken": "new.token.for.renewal"
 }
 ```
 
-**Error Response**:
-```json
-{
-  "valid": false,
-  "reason": "invalid_supabase_token"
-}
-```
+### POST /api/auth/verify-jwt
 
-**Usage Example**:
-```javascript
-const response = await fetch('/api/auth/session', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ access_token: supabaseToken })
-});
-
-const result = await response.json();
-if (result.valid) {
-  localStorage.setItem('session_token', result.token);
-}
-```
-
-### POST `/api/auth/check`
-
-Validate server session token.
+**Purpose**: Verify JWT token
 
 **Request Body**:
 ```json
 {
-  "token": "server_session_token"
+  "jwt": "jwt.token.here"
 }
 ```
 
@@ -208,269 +138,79 @@ Validate server session token.
 ```json
 {
   "valid": true,
-  "reason": "valid"
-}
-```
-
-**Error Response**:
-```json
-{
-  "valid": false,
-  "reason": "token_expired"
-}
-```
-
-**Usage Example**:
-```javascript
-const response = await fetch('/api/auth/check', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ token: sessionToken })
-});
-
-const result = await response.json();
-if (!result.valid) {
-  // Redirect to login
+  "payload": {
+    "sub": "username",
+    "exp": 1234567890
+  }
 }
 ```
 
 ---
 
-## 🔒 Security Features
+## �️ Security Features
 
-### JWT Token Security
+### Turnstile CAPTCHA
 
-**Features**:
-- Short-lived session tokens (1 hour expiration)
-- Secure token generation using environment secrets
-- Token signature verification
-- Expiration time validation
-- Automatic token refresh
-
-**Configuration**:
-```toml
-[vars]
-JWT_SECRET = "your_secure_random_key"
-JWT = "your_additional_key"
-```
-
-### Session Management
-
-**Features**:
-- Secure session token storage
-- Token expiration handling
-- Session invalidation on logout
-- Multi-device session support
-- "Remember me" functionality
+- **Purpose**: Bot protection for login
+- **Implementation**: Cloudflare Turnstile widget
+- **Verification**: Server-side token validation
 
 ### Rate Limiting
 
-**Implementation**:
-- Per-IP rate limiting on authentication endpoints
-- Exponential backoff for failed attempts
-- Temporary account lockout after multiple failures
-- Monitoring for suspicious activity
+- **IP-based tracking**: Prevent brute force attacks
+- **User limits**: Maximum users per IP
+- **Ban system**: Temporary IP bans for suspicious activity
+
+### Token Security
+
+- **One-time tokens**: Single-use, short-lived
+- **JWT tokens**: 30-minute expiration
+- **Renewal**: Automatic renewal every 10 minutes
+- **Signature verification**: HMAC-SHA256 signatures
 
 ---
 
 ## 🔑 Token Management
 
-### Session Token Lifecycle
+### One-Time Token
 
-1. **Issuance**: Token created after successful authentication
-2. **Usage**: Token used for API requests
-3. **Validation**: Token validated on each request
-4. **Refresh**: Token refreshed before expiration
-5. **Expiration**: Token invalidates after expiration time
-6. **Revocation**: Token revoked on logout
+- **Purpose**: Initial authentication
+- **Lifetime**: 10 minutes
+- **Usage**: Single-use, exchanged for JWT
+- **Storage**: Cached in login-client-worker
 
-### Token Structure
+### JWT Token
 
-**Header**:
-```json
-{
-  "alg": "HS256",
-  "typ": "JWT"
-}
-```
-
-**Payload**:
-```json
-{
-  "user_id": "user_id",
-  "email": "user@example.com",
-  "iat": 1234567890,
-  "exp": 1234571490
-}
-```
-
-**Signature**: HMAC-SHA256 signature using JWT_SECRET
-
-### Token Refresh Strategy
-
-**Automatic Refresh**:
-- Client checks token expiration before API calls
-- If token expires within 5 minutes, request new token
-- New token requested from `/api/auth/session`
-- Failed refresh triggers redirect to login
-
-**Manual Refresh**:
-```javascript
-async function refreshToken() {
-  const response = await fetch('/api/auth/session', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ access_token: getAccessToken() })
-  });
-  
-  const result = await response.json();
-  if (result.valid) {
-    localStorage.setItem('session_token', result.token);
-  }
-}
-```
+- **Purpose**: API authentication
+- **Lifetime**: 30 minutes
+- **Usage**: Sent in Authorization header
+- **Renewal**: Every 10 minutes via one-time token
+- **Storage**: Cached in login-client-worker
 
 ---
 
-## 🛠️ Development Guidelines
+## 📖 Development Guidelines
 
-### Adding New Authentication Methods
+### Adding New Auth Routes
 
-1. **Create new module** in `auth/` directory
-2. **Implement verification logic**
-3. **Add route to main handler**
-4. **Update documentation**
-5. **Add tests**
-
-**Example**:
-```javascript
-// auth/new_method.js
-export async function verifyNewMethod(token, env) {
-  // Implementation
-  return { valid: true, payload: {} };
-}
-
-// auth/index.js
-import { verifyNewMethod } from './new_method.js';
-
-if (path === "new-method" && method === "POST") {
-  const result = await verifyNewMethod(body?.token, env);
-  return result;
-}
-```
+1. Add route handler in `index.js`
+2. Implement business logic
+3. Add security checks
+4. Document in this README
 
 ### Security Best Practices
 
-**Token Storage**:
-- Never store tokens in localStorage for sensitive operations
-- Use httpOnly cookies for additional security
-- Implement token encryption if needed
-- Clear tokens on logout
+- **Never log sensitive data**: JWTs, passwords, tokens
+- **Validate all inputs**: Check for injection attacks
+- **Use HTTPS**: All API calls must be secure
+- **Rate limit requests**: Prevent abuse
 
-**Input Validation**:
-- Validate all input parameters
-- Sanitize user input
-- Implement length limits
-- Check for SQL injection patterns
+### Error Handling
 
-**Error Handling**:
-- Never expose sensitive information in errors
-- Use generic error messages for authentication failures
-- Log detailed errors for debugging
-- Implement rate limiting for error responses
-
-### Testing Authentication
-
-**Unit Testing**:
-```javascript
-test('verifySupabaseToken validates valid token', async () => {
-  const result = await verifySupabaseToken(validToken, supabaseUrl);
-  expect(result.valid).toBe(true);
-});
-```
-
-**Integration Testing**:
-```javascript
-test('Auth endpoint exchanges tokens correctly', async () => {
-  const response = await fetch('/api/auth/session', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ access_token: validToken })
-  });
-  
-  const result = await response.json();
-  expect(result.valid).toBe(true);
-  expect(result.token).toBeDefined();
-});
-```
+- Return generic error messages to clients
+- Log detailed errors server-side
+- Use consistent error codes
 
 ---
 
-## 🔧 Troubleshooting
-
-### Common Issues
-
-**Token Verification Failing**:
-- Check JWT_SECRET configuration
-- Verify token format and structure
-- Check token expiration time
-- Verify Supabase configuration
-
-**Session Token Expiring Too Quickly**:
-- Check expiration time configuration
-- Verify system time synchronization
-- Check token refresh logic
-- Monitor for clock skew
-
-### Debugging
-
-**Enable Debug Logging**:
-```javascript
-console.log("Auth request:", { path, method, body });
-console.log("Token verification:", tokenResult);
-console.log("Session issuance:", sessionResult);
-```
-
-**Monitor Token Usage**:
-- Track token issuance rate
-- Monitor validation failures
-- Check for unusual patterns
-- Set up alerts for suspicious activity
-
----
-
-## 📚 Additional Resources
-
-- [Supabase Authentication Documentation](https://supabase.com/docs/guides/auth)
-- [JWT Best Practices](https://tools.ietf.org/html/rfc8725)
-- [OWASP Authentication Guidelines](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
-
----
-
-## 🚀 Future Enhancements
-
-Planned authentication improvements:
-
-- **Multi-Factor Authentication**: Add 2FA support
-- **OAuth Providers**: Additional OAuth providers (GitHub, Microsoft)
-- **Biometric Authentication**: WebAuthn/FIDO2 support
-- **Session Analytics**: Detailed session tracking
-- **Advanced Rate Limiting**: More sophisticated rate limiting
-- **Anomaly Detection**: ML-based fraud detection
-
----
-
-## 📝 Notes
-
-- All tokens use secure cryptographic algorithms
-- Session tokens have short expiration for security
-- Turnstile provides bot protection
-- Supabase handles user management
-- Error messages are generic for security
-- Rate limiting prevents brute force attacks
-
----
-
-<p align="center">
-  <strong>Last Updated: 2024-08-15</strong>
-</p>
+*Last updated: 2026-10-15*

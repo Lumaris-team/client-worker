@@ -122,7 +122,7 @@ If you want to customize the server code:
 The code requires several configurations in your Cloudflare account:
 
 **Required services:**
-- **Supabase**: For user authentication
+- **JWT**: For user authentication
 - **Cloudflare Workers AI**: For AI features
 - **Cloudflare D1**: For the database
 - **Cloudflare KV**: For caching
@@ -246,7 +246,7 @@ For complete technical documentation, consult the READMEs in each directory:
 - **Main site**: https://lumaris.fr.eu.org
 - **Cloudflare Workers documentation**: https://developers.cloudflare.com/workers/
 - **Cloudflare D1 documentation**: https://developers.cloudflare.com/d1/
-- **Supabase documentation**: https://supabase.com/docs
+- **JWT documentation**: https://jwt.com/docs
 
 ---
 
@@ -255,7 +255,7 @@ For complete technical documentation, consult the READMEs in each directory:
 ### Personal data
 
 This code respects data protection principles:
-- **Secure authentication** via Supabase
+- **Secure authentication** via JWT
 - **Bot protection** via Turnstile
 - **Encrypted sensitive data**
 - **GDPR compliance** for European users
@@ -338,7 +338,7 @@ If you modify the server code:
 - **Workers AI**: Cutting-edge artificial intelligence
 - **D1 Database**: SQLite-compatible database
 - **KV Storage**: Key-value storage for caching
-- **Supabase**: Authentication and user management
+- **JWT**: Authentication and user management
 - **MEGA.nz**: Cloud storage for files
 - **ÉcoleDirecte API**: French school system integration
 

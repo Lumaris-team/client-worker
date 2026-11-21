@@ -38,7 +38,7 @@ The backend is organized as a service-oriented architecture where each directory
 backend/
 ├── auth/                  # Authentication and authorization services
 │   ├── index.js          # Main auth API handler
-│   ├── supabase_jwt.js   # Supabase JWT verification
+│   ├── jwt_jwt.js   # JWT JWT verification
 │   ├── session.js        # Session token management
 │   └── encoding.js       # Encoding utilities
 ├── ai/                    # AI-powered features
@@ -141,15 +141,15 @@ try {
 
 **Key Functions**:
 - `Auth(env, path, method, body, request)`: Main auth handler
-- `verifySupabaseToken(token, supabaseUrl)`: Verify Supabase JWT
+- `verifyJWTToken(token, jwtUrl)`: Verify JWT JWT
 - `issueSessionToken(env, payload)`: Generate session token
 - `verifySessionToken(env, token)`: Validate session token
 
 **API Endpoints**:
-- `POST /api/auth/session`: Exchange Supabase token for session token
+- `POST /api/auth/session`: Exchange JWT token for session token
 - `POST /api/auth/check`: Validate session token
 
-**Dependencies**: Supabase
+**Dependencies**: JWT
 
 ### AI Service (`ai/`)
 
@@ -285,12 +285,12 @@ try {
 ### Authentication Endpoints
 
 #### POST `/api/auth/session`
-Exchange Supabase token for session token
+Exchange JWT token for session token
 
 **Request Body**:
 ```json
 {
-  "access_token": "supabase_access_token"
+  "access_token": "jwt_access_token"
 }
 ```
 
@@ -487,7 +487,7 @@ await env.deleted_chats.delete(key);
 
 ## 🔗 External Integrations
 
-### Supabase Integration
+### JWT Integration
 
 **Purpose**: Authentication and user management
 
@@ -499,8 +499,8 @@ await env.deleted_chats.delete(key);
 **Configuration**:
 ```toml
 [vars]
-SUPABASE_URL = "https://xyz.supabase.co"
-SUPABASE_ANON_KEY = "your_anon_key"
+JWT_URL = "https://xyz.jwt.co"
+JWT_ANON_KEY = "your_anon_key"
 ```
 
 ### Cloudflare Workers AI
@@ -564,8 +564,8 @@ CLOUDFLARE_ACCOUNT_ID = "your_account_id"
 ### JWT Token Management
 
 **Session Token Flow**:
-1. User authenticates with Supabase
-2. Frontend receives Supabase access token
+1. User authenticates with JWT
+2. Frontend receives JWT access token
 3. Frontend exchanges for server session token
 4. Session token used for API requests
 5. Session token validated on each request

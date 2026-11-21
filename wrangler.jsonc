@@ -18,6 +18,12 @@
     "name": "AI",
     "binding": "AI"
   },
+  "services": [
+    {
+      "binding": "LOGIN_CLIENT_WORKER",
+      "service": "login-client-worker"
+    }
+  ],
   "d1_databases": [
     { "binding": "timetable", "database_name": "timetable", "database_id": "__D1_ID_TIMETABLE__" },
     { "binding": "subjects_data", "database_name": "subjects_data", "database_id": "__D1_ID_SUBJECTS_DATA__" },

@@ -1,28 +1,56 @@
-// Server-issued session tokens.
-//
-// After a Supabase access token is verified, we mint our own short-lived JWT
-// (HS256, signed with the project secret) and keep a registry of the live token
-// ids in the cache for 10 minutes. The client sends this token on every API
-// call; the API checks the signature AND that the id is still registered, so a
-// token can be expired/pruned server-side.
+// JWT token verification for main-client-worker
+// Verifies JWTs issued by login-client-worker
 
-import { getCacheValue, setCacheValue } from "../cache/index.js";
-import { stringToBase64Url, bytesToBase64Url, decodeJwtPart } from "./encoding.js";
-
-const REGISTRY_KEY = "session_tokens";
-export const SESSION_TTL_SECONDS = 5 * 60; // 5 minutes
-
-export async function resolveSigningSecret(env) {
-  const binding = env?.JWT_SECRET || env?.JWT;
-  const secret = typeof binding?.get === "function" ? await binding.get() : binding;
-  if (!secret || secret === "generate-a-secure-random-key") {
-    throw new Error("Missing signing secret (JWT_SECRET or JWT).");
+export async function verifySessionToken(env, token) {
+  if (!token || typeof token !== "string") {
+    return { valid: false, reason: "missing_token" };
   }
-  return secret;
+  const parts = token.split(".");
+  if (parts.length !== 3) {
+    return { valid: false, reason: "malformed_token" };
+  }
+  const [headerB64, payloadB64, signatureB64] = parts;
+
+  // Get JWT secret from environment
+  const jwtSecret = await getJWTSecret(env);
+  if (!jwtSecret) {
+    return { valid: false, reason: "no_secret" };
+  }
+
+  // Verify signature
+  const expected = await sign(`${headerB64}.${payloadB64}`, jwtSecret);
+  if (expected !== signatureB64) {
+    return { valid: false, reason: "bad_signature" };
+  }
+
+  // Decode payload
+  const payload = decodeJwtPart(payloadB64);
+  if (!payload) {
+    return { valid: false, reason: "malformed_token" };
+  }
+
+  // Check expiration
+  const now = Math.floor(Date.now() / 1000);
+  if (typeof payload.exp === "number" && payload.exp < now) {
+    return { valid: false, reason: "expired" };
+  }
+
+  return { valid: true, payload };
 }
 
-async function getSecret(env) {
-  return resolveSigningSecret(env);
+// Helper functions for JWT operations
+async function getJWTSecret(env) {
+  const binding = env.JWT_SECRET_KEY;
+  if (typeof binding === "string") return binding;
+  if (binding && typeof binding.get === "function") {
+    try {
+      return await binding.get();
+    } catch (e) {
+      console.error("JWT_SECRET_KEY get error:", e);
+      return null;
+    }
+  }
+  return null;
 }
 
 async function hmacKey(secret) {
@@ -41,86 +69,33 @@ async function sign(signingInput, secret) {
   return bytesToBase64Url(new Uint8Array(sig));
 }
 
-function randomId() {
-  return bytesToBase64Url(crypto.getRandomValues(new Uint8Array(16)));
-}
-
-// Read the registry, drop expired ids, add the new one, write it back.
-async function registerToken(jti, exp) {
-  let tokens = await getCacheValue(REGISTRY_KEY);
-  if (!Array.isArray(tokens)) tokens = [];
-  const now = Math.floor(Date.now() / 1000);
-  tokens = tokens.filter((t) => t && typeof t.exp === "number" && t.exp > now);
-  tokens.push({ jti, exp });
-  await setCacheValue(REGISTRY_KEY, tokens);
-}
-
-async function isRegistered(jti) {
-  const tokens = await getCacheValue(REGISTRY_KEY);
-  if (!Array.isArray(tokens)) return false;
-  const now = Math.floor(Date.now() / 1000);
-  return tokens.some((t) => t && t.jti === jti && typeof t.exp === "number" && t.exp > now);
-}
-
-// Mint a session token for a verified Supabase user payload.
-export async function issueSessionToken(env, supabasePayload = {}) {
-  const secret = await getSecret(env);
-  const now = Math.floor(Date.now() / 1000);
-  const exp = now + SESSION_TTL_SECONDS;
-  const jti = randomId();
-
-  const header = { alg: "HS256", typ: "JWT" };
-  const payload = {
-    sub: supabasePayload.sub ?? null,
-    email: supabasePayload.email ?? null,
-    jti,
-    iat: now,
-    exp,
-  };
-  const signingInput = `${stringToBase64Url(JSON.stringify(header))}.${stringToBase64Url(
-    JSON.stringify(payload),
-  )}`;
-  const signature = await sign(signingInput, secret);
-
-  await registerToken(jti, exp);
-
-  return { token: `${signingInput}.${signature}`, exp, expiresIn: SESSION_TTL_SECONDS };
-}
-
-// Validate a session token: signature + not expired + still registered.
-export async function verifySessionToken(env, token) {
-  if (!token || typeof token !== "string") {
-    return { valid: false, reason: "missing_token" };
+function bytesToBase64Url(bytes) {
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
   }
-  const parts = token.split(".");
-  if (parts.length !== 3) {
-    return { valid: false, reason: "malformed_token" };
-  }
-  const [headerB64, payloadB64, signatureB64] = parts;
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
 
-  let secret;
+function base64UrlToBytes(input) {
+  const pad = input.length % 4 === 0 ? "" : "=".repeat(4 - (input.length % 4));
+  const base64 = input.replace(/-/g, "+").replace(/_/g, "/") + pad;
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
+}
+
+function base64UrlToString(input) {
+  return new TextDecoder().decode(base64UrlToBytes(input));
+}
+
+function decodeJwtPart(part) {
   try {
-    secret = await getSecret(env);
+    return JSON.parse(base64UrlToString(part));
   } catch (e) {
-    return { valid: false, reason: "no_secret" };
+    return null;
   }
-
-  const expected = await sign(`${headerB64}.${payloadB64}`, secret);
-  if (expected !== signatureB64) {
-    return { valid: false, reason: "bad_signature" };
-  }
-
-  const payload = decodeJwtPart(payloadB64);
-  if (!payload) {
-    return { valid: false, reason: "malformed_token" };
-  }
-  const now = Math.floor(Date.now() / 1000);
-  if (typeof payload.exp === "number" && payload.exp < now) {
-    return { valid: false, reason: "expired" };
-  }
-  if (!(await isRegistered(payload.jti))) {
-    return { valid: false, reason: "revoked" };
-  }
-
-  return { valid: true, payload };
 }

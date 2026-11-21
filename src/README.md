@@ -115,7 +115,7 @@ The backend follows a service-oriented architecture:
 
 **Shared Libraries:**
 - `auth.js`: Authentication utilities
-- `supabase.js`: Supabase client configuration
+- `jwt.js`: JWT client configuration
 - `settings.js`: Settings management
 - `icons.js`: Icon system
 
@@ -123,7 +123,7 @@ The backend follows a service-oriented architecture:
 
 **Authentication (`auth/`):**
 - JWT token generation and validation
-- Supabase integration
+- JWT integration
 - Turnstile verification
 - Session management
 
@@ -187,7 +187,7 @@ The backend follows a service-oriented architecture:
 
 ```
 1. User Login → /api/auth/login
-2. Supabase Auth → User Verification
+2. JWT Auth → User Verification
 3. Turnstile → Bot Protection
 4. JWT Generation → Session Token
 5. Token Storage → Client Side
@@ -225,14 +225,14 @@ import { Auth, verifySessionToken } from "./backend/auth/index.js";
 
 Frontend pages depend on shared libraries:
 - `auth.js`: Authentication functions
-- `supabase.js`: Database client
+- `jwt.js`: Database client
 - `settings.js`: User preferences
 - `icons.js`: UI icons
 
 ### Backend Service Dependencies
 
 Backend services have these dependencies:
-- **Auth**: Supabase, Turnstile, JWT libraries
+- **Auth**: JWT, Turnstile, JWT libraries
 - **AI**: Workers AI binding, KV storage
 - **Database**: D1 binding, MEGA API
 - **ÉcoleDirecte**: External API client
